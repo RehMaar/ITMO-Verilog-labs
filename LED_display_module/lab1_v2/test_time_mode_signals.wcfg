@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/maar/stdy/Schema/lab1_v2/lab1_v2/test_time_mode_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="test_time_mode" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="9" />
+   <wvobject fp_name="/test_time_mode/fc_uut/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_time_mode/uut/tm_value" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">tm_value[26:0]</obj_property>
+      <obj_property name="ObjectShortName">tm_value[26:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_time_mode/uut/tm_counter" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">tm_counter[26:0]</obj_property>
+      <obj_property name="ObjectShortName">tm_counter[26:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_time_mode/uut/allow_count" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">allow_count</obj_property>
+      <obj_property name="ObjectShortName">allow_count</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_time_mode/uut/tm_cmp" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">tm_cmp</obj_property>
+      <obj_property name="ObjectShortName">tm_cmp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_time_mode/uut/fc_clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">fc_clk</obj_property>
+      <obj_property name="ObjectShortName">fc_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_time_mode/fc_uut/fc_clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">fc_clk</obj_property>
+      <obj_property name="ObjectShortName">fc_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_time_mode/fc_uut/counter" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">counter[4:0]</obj_property>
+      <obj_property name="ObjectShortName">counter[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_time_mode/fc_uut/fm_no" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">fm_no[4:0]</obj_property>
+      <obj_property name="ObjectShortName">fm_no[4:0]</obj_property>
+   </wvobject>
+</wave_config>
