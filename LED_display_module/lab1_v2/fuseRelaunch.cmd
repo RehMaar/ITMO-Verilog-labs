@@ -1,1 +1,0 @@
--intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "/home/maar/stdy/Schema/lab1_v2/lab1_v2/test_time_mode_isim_beh.exe" -prj "/home/maar/stdy/Schema/lab1_v2/lab1_v2/test_time_mode_beh.prj" "work.test_time_mode" "work.glbl" 
