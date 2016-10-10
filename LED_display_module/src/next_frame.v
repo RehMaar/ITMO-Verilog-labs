@@ -1,5 +1,6 @@
 // Input: frame counter
 // Return: next frame
+/*
 module next_frame (
     input           clk,
     input           rst,
@@ -52,4 +53,42 @@ module next_frame (
 
 endmodule
 
+*/
 
+module next_frame(
+    input           clk,
+    input           rst,
+    input           fc, // Fix?
+    output [15:0]   led    
+);
+
+   localparam STRAIGHT;
+   localparam REVERSE:
+
+   reg [15:0] frame;
+   reg state;
+
+   assign led = frame;
+
+   always@( posedge clk ) begin
+      if( rst )
+         led <= 0;
+      else if( fc ) begin
+         if( frame[0] == 1 )
+            state = 0;
+         else if( frame[15] == 0 ) begin
+            state = 1;
+         end
+
+         case( state  )
+            STRAIGHT : begin
+               frame >>= 1;
+               frame[15] = 1;
+            end
+            REVERSE  :
+               frame <<= 1;
+         endcase
+      end
+   end
+
+endmodule

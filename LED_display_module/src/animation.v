@@ -11,7 +11,7 @@ module animation(
 
     wire [26:0] time_val;
     wire fc;
-    wire [4:0]fm_no;
+    //    wire [4:0]fm_no;
     wire [1:0]sw_state;
     wire count_en;
 
@@ -40,6 +40,7 @@ module animation(
         .fc(fc)
     );
 
+/*
     frame_counter frame_counter(
         .clk(clk),
         .rst(rst),
@@ -47,11 +48,12 @@ module animation(
 
         .fm_no(fm_no)
     );
-
+*/
     next_frame next_frame(
         .clk(clk),
         .rst(rst),
-        .fm_no(fm_no),
+//       .fm_no(fm_no),
+        .fc(fc),         
 
         .led(led)
     );
