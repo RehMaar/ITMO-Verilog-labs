@@ -62,8 +62,8 @@ module next_frame(
     output [15:0]   led    
 );
 
-   localparam STRAIGHT;
-   localparam REVERSE:
+   localparam STRAIGHT = 0;
+   localparam REVERSE = 1;
 
    reg [15:0] frame;
    reg state;
@@ -72,23 +72,27 @@ module next_frame(
 
    always@( posedge clk ) begin
       if( rst )
-         led <= 0;
+		begin
+			frame <= 0;
+         state <= 0;
+		end
       else if( fc ) begin
          if( frame[0] == 1 )
-            state = 0;
+            state <= 0;
+			end
          else if( frame[15] == 0 ) begin
-            state = 1;
+            state <= 1;
          end
 
          case( state  )
             STRAIGHT : begin
-               frame >>= 1;
-               frame[15] = 1;
+               frame <= frame >> 1;
+               frame[15] <= 1;
             end
             REVERSE  :
-               frame <<= 1;
+               frame <= frame << 1;
          endcase
-      end
+
    end
 
 endmodule
