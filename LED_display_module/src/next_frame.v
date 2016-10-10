@@ -71,28 +71,28 @@ module next_frame(
    assign led = frame;
 
    always@( posedge clk ) begin
-      if( rst )
-		begin
-			frame <= 0;
-         state <= 0;
-		end
-      else if( fc ) begin
-         if( frame[0] == 1 )
-            state <= 0;
+		if( rst )
+			begin
+				frame <= 0;
+				state <= 0;
 			end
-         else if( frame[15] == 0 ) begin
+		else if( fc ) begin
+			if( frame[0] == 1 )
+            state <= 0;
+		end
+        else if( frame[15] == 0 ) begin
             state <= 1;
-         end
+        end
 
-         case( state  )
+        case( state  )
             STRAIGHT : begin
                frame <= frame >> 1;
                frame[15] <= 1;
             end
             REVERSE  :
-               frame <= frame << 1;
-         endcase
+            frame <= frame << 1;
+        endcase
 
-   end
+    end
 
 endmodule
