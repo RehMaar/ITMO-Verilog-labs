@@ -51,9 +51,9 @@
         \vspace{3cm}
 
         \hfill\begin{flushright}
-             Студенты: \\
+             Студенты:
              \vfill
-             Преподаватель: \\
+             Преподаватель:
         \end{flushright}
         \vfill
         \vfill
@@ -80,25 +80,23 @@
         \begin{enumerate}
             \item Знакомство с основами проектирования цифровых устройств с использованием языка структурно-функционального описания аппаратуры Verilog HDL.
             \item Освоение работы с базовыми дискретными элементами ввода/вывода: светодиоды, позиционные переключатели, семисегментные индикаторы. 
-            \item  Знакомство с маршрутом проектирования цифровых схем для ПЛИС. 
+            \item Знакомство с маршрутом проектирования цифровых схем для ПЛИС. 
         \end{enumerate} 
      \section*{RTL модель}
         \begin{figure}[h!]
-            \includegraphics[scale=0.7]{../images/rtl.png}
+            \includegraphics[scale=0.5]{../images/rtl1.PNG}
+        \end{figure}
+                 \begin{figure}[h!]
+            \includegraphics[scale=0.5]{../images/rtl2.PNG}
+        \end{figure}
+                 \begin{figure}[h!]
+            \includegraphics[scale=0.5]{../images/rtl3.PNG}
         \end{figure}
      \section*{Тест-бенч}
         \lstinputlisting[language=Verilog]{../test_bench/test_animation.v}
-        \lstinputlisting[language=Verilog]{../test_bench/test_time_mode.v}
-        \lstinputlisting[language=Verilog]{../test_bench/test_sw_mode.v}
      \section*{Временные диаграммы}
         \begin{figure}[h!]
-            \includegraphics[scale=0.7]{../images/animation.png}
-        \end{figure}
-        \begin{figure}[h!]
-            \includegraphics[scale=0.7]{../images/time_mode.png}
-        \end{figure}
-        \begin{figure}[h!]
-            \includegraphics[scale=0.7]{../images/sw_mode.png}
+            \includegraphics[scale=0.5]{../images/animation.png}
         \end{figure}
         Описание сигналов:
         \begin{itemize}
@@ -108,19 +106,16 @@
             \item count\_en -- сигнал, разрешающий счёт ( необходим для запрета счёта в состоянии STOP);
             \item tm\_value -- текущее время, определяемое состоянием sw0/sw1;
             \item tm\_counter -- счётчик времени;
-            \item fc -- сигнал для счётчик кадров;
-            \item fm\_no -- номер текущего кадра;
-            \item counter -- счётчик кадров.
+            \item fc -- сигнал смены кадра;
         \end{itemize}
 
      \section*{Листинг}
         \lstinputlisting[language=Verilog]{../src/switches.v}
         \lstinputlisting[language=Verilog]{../src/sw_mode.v}
         \lstinputlisting[language=Verilog]{../src/time_mode.v}
-        \lstinputlisting[language=Verilog]{../src/frame_counter.v}
         \lstinputlisting[language=Verilog]{../src/next_frame.v}
         \lstinputlisting[language=Verilog]{../src/animation.v}
 
     \section*{Вывод}
-
+            В результате выполнения лабораторной работы были изучены основы проектирования устройств на языке Verilog. Был разработан модуль, выводящий на LED'ы платы анимацию, генерирующуюся во время работы по разработанному алгоритму, и протестирован на плате Nexys4 DDR.
 \end{document}
