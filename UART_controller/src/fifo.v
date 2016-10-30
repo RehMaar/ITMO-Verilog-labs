@@ -1,5 +1,5 @@
 module fifo #( 
-    parameter DEPTH = 16,
+    parameter DEPTH    = 16,
     parameter CAPACITY = 8
 ) (
     input                      clk,

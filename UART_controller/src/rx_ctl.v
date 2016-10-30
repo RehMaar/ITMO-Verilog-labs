@@ -2,13 +2,16 @@ module rx_ctl(
     input               clk,
     input               rst,
 
-    input               rd,
-
     input               bclk,
+    // Read a word from fifo.
+    input               rd,
+    // Enable receive.
+    input               en,
     input               rxd,
 
+    // Received data.
     output  reg [7:0]   dout,
-    output              flow_ctl
+    output              rts
 );
 
     reg [7:0] rhr  = 0; // Receiver Hold Register.
@@ -28,6 +31,7 @@ module rx_ctl(
         .rst(rst),
         .bclk(bclk),
         .rxd(rxd),
+        .en(en),
 
         .dout(rhr),
         .rx_rdy(rx_rdy)
@@ -46,4 +50,13 @@ module rx_ctl(
         .dout (dout)
     );
 
+    always @( posedge rst ) begin
+        rhr  = 0;
+        dctr = 0;
+        wr   = 0;
+        rd   = 0;
+    end
+
+    always @( posedge clk ) begin
+    end
 endmodule
