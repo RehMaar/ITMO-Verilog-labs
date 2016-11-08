@@ -1,20 +1,21 @@
-module uart_controller(
+module uart_ctl(
     input           clk,
     input           rst,
 
-    input           txd,
-    input           cts, /* ? */
+    input           rx,
+//  input           rts,
 
     input    [7:0]  din,
+    input           rd,
 
-    output          rxd,
-    output          rts, /* ? */
+    output          tx,
+//  output          cts,
 
-    output   [7:0]  dout
+    output   [7:0]  dout,
+    output          d_rdy
 );
 
     wire    bclk;
-    wire    flow_ctl;
 
     baud_gen baud_gen(
         .clk(clk),
@@ -23,29 +24,27 @@ module uart_controller(
         .bclk(bclk)
     );
 
-    rx_ctl rx_ctl(
+    rx_mod rx_mod(
         .clk (clk),
         .rst (rst),
         .bclk(bclk),
+        .rx (rx),
 
-        .rd  (rd), // allow reading.
-        .rxd (rxd),
-        .en(en_rx),
-
-        .dout(dout),
-        .rts (rts)
+        .dout  (dout),
+        .rx_rdy(rx_rdy),
+        .d_rdy (d_rdy)
     );
 
-    tx_ctl tx_ctl(
+    tx_mod tx_mod(
         .clk (clk),
         .rst (rst),
         .bclk(bclk),
 
-        .din (din),
-        .en(en_tx),
-        .cts(cts),
+        .din(din),
+        .en (tx_en),
+ //     .cts(cts),
 
-        .txd(txd),
+        .tx(tx),
         .tx_rdy(tx_rdy)
     );
 

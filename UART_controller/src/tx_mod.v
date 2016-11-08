@@ -8,7 +8,7 @@ module tx_mod(
     input           en,
 
     output          txd,
-    output  reg     tx_rdy  // 0 -- in process of transmission, 1 otherwise.
+    output   reg    tx_rdy  // 0 -- in process of transmission, 1 otherwise.
 );
 
     localparam IDLE  = 2'b00;
@@ -18,41 +18,45 @@ module tx_mod(
     localparam START_BIT = 0;
     localparam STOP_BIT  = 1;
 
-    reg [1:0]state    = 0;
-    reg [2:0]data_ctr = 0;
+    reg [1:0]state = 0;
+    reg [2:0]d_ctr = 0;
 
-    reg [7:0]hold = data;
+    reg [7:0]thr = 0;
     reg [7:0]tsr = 0;
 
-    always @( posedge rst ) begin
-            state    <= 0;
-            data_ctr <= 0;
-            tx_rdy   <= 1;
-    end
-    always @( posedge bclk ) begin
+    always @( posedge clk )
+        if( rst )begin
+            state  = 0;
+            d_ctr  = 0;
+            tx_rdy = 1;
+        end
+
+    always @( negedge bclk )
         case( state )
             IDLE:
-            begin
-                tx_rdy <= 1;
                 if( en ) begin
-                    rx_rdy <= 0;
-                    state  <= START;
+                    tx_rdy = 0;
+                    state  = START;
                 end
-            end
             START:
-            begin
-                txd <= START_BIT;
-                tsr <= hold;
-            end
+                begin
+                    txd   = START_BIT;
+                    tsr   = thr;
+                    state = TRANSMIT;
+                end
             TRANSMIT:
-            begin
-                txd <= tsr[0];
-                tsr <= tsr >> 1;
-            end
+                if( d_ctr == 3'd7 ) begin
+                    state = STOP;
+                    d_ctr = 0;
+                end else begin
+                    d_ctr <= d_ctr + 1;
+                    txd   <= tsr[0];
+                    tsr   <= tsr >> 1;
+                end
             STOP:
-            begin
-                txd <= STOP_BIT;
-            end
+                begin
+                    txd    = STOP_BIT;
+                    tx_rdy = 1;
+                end
         endcase
-    end
 endmodule
