@@ -6,23 +6,26 @@ module baud_gen #(
 (
     input           clk,
     input           rst,
-//    input   [7:0]   dll, /* DLL & DLH is 32x. */
-//    input   [7:0]   dlh,
 
-    output          bclk
+    output   reg     bclk
 );
-    //wire [16:0]  divisor = { dll, dlh };
-    reg  [16:0]  ctr     = 0;
+    reg [16:0] ctr  = BAUDRATE;
 
-    assign bclk = ctr == BAUDRATE;
+    always @( posedge rst ) begin
+        ctr = BAUDRATE;
+        bclk = 0;
+     end
 
-    always @( posedge clk, posedge rst ) begin
-        if( rst )
-            ctr <= 0;
-        else if( ctr == BAUDRATE)
-            ctr <= 0;
+    always @( posedge clk ) begin
+        if( ctr == BAUDRATE )
+            bclk = 1;
+        else if( ctr == BAUDRATE/2 )
+            bclk = 0;
+
+        if( ctr == 0 )
+            ctr <= BAUDRATE;
         else
-            ctr <= ctr + 16'd1;
+            ctr <= ctr - 16'd1;
     end
 
 endmodule

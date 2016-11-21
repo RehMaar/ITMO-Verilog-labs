@@ -5,34 +5,19 @@ module ctl(
 
     /* UART interface. */
     input           rx,
-    input           cts,
+//  input           cts,
 
     output          tx,
-    output          rts,
+//  output          rts,
 
     /* Nexys interface.*/
-    input           sw,
-    output  [7:0]   led
+    input              sw,
+    output  reg[7:0]   led
 );
 
-    reg [7:0]   dout = 0;
-    reg [7:0]   din  = 0;
-
-    uart_ctl uart_ctl(
-
-        .clk(clk),
-        .rst(rst),
-
-        .tx (tx),
-        .cts(cts),
-        .din(din),
-        .rd(rd),
-
-        .rx  (rx),
-        .rts (rts),
-        .dout(dout),
-        .d_rdy(d_rdy)
-    );
+    wire [7:0] dout_uart;
+    wire [7:0] dout_io;
+    wire tx_en;
 
     io_ctl io_ctl(
         .clk(clk),
@@ -40,11 +25,34 @@ module ctl(
 
         .sw(sw),
 
-        .din(din),
+        .din(dout_uart),
         .d_rdy(d_rdy),
 
-        .dout(dout),
-        .rd(rd)
+        .dout(dout_io),
+        .rd(tx_en)
     );
+
+    uart_ctl uart_ctl(
+
+        .clk(clk),
+        .rst(rst),
+
+        .tx (tx),
+      //  .cts(cts),
+        .din(dout_io),
+        .tx_en(tx_en),
+
+        .rx  (rx),
+     //   .rts (rts),
+        .dout(dout_uart),
+        .d_rdy(d_rdy)
+    );
+
+     always @( negedge clk )
+        if( d_rdy )
+            led <= dout_uart;
+
+     always @( posedge rst )
+        led <=  0;
 
 endmodule

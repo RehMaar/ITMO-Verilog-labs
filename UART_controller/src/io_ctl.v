@@ -4,29 +4,34 @@ module io_ctl(
     /* SW = 0: echo-mode. SW = 1: send 'Hello world!\r\n'. */
     input               sw,
     /* Data from uart.*/
-    input   reg[7:0]    din,
+    input   [7:0]       din,
     input               d_rdy,
 
     /* Data to uart. */
     output  reg[7:0]    dout,
-    output  reg         rd,
+    output  reg         rd
 );
 
     localparam TIME      = 100000000;
     localparam ECHO_MODE = 0;
     localparam SEND_MODE = 1;
 
-    reg [7:0] data [14:0]  = { "Hello, world!", 16'h0D, 16'h0 };
-    reg [3:0] d_ctr        = 0;
-
+    reg [7:0] data [14:0];
+    reg [3:0]  d_ctr  = 0;
     reg [26:0] tm_ctr = 0;
 
-    always @( negedge clk ) begin
-        if( rst ) begin
-            dout = 0;
-            rd   = 0;
-            send_data = 0;
-        end else begin
+
+    always @( posedge rst ) begin
+           dout = 0;
+           rd   = 0;
+           data[0]  = "H"; data[1]  = "e";   data[2]  = "l";
+           data[3]  = "l"; data[4]  = "o";   data[5]  = ",";
+           data[6]  = " "; data[7]  = "w";   data[8]  = "o";
+           data[9]  = "r"; data[10] = "l";   data[11] = "d";
+           data[12] = "!"; data[13] = 8'h0D; data[14] = 8'h0A;
+    end
+
+    always @( negedge clk )
             case( sw )
                 ECHO_MODE:
                     if( d_rdy ) begin
@@ -42,14 +47,12 @@ module io_ctl(
                     end
                 end
             endcase
-        end
-    end
 
-    always @( posedge clk ) begin
+
+    always @( posedge clk )
         if( rst )
             tm_ctr = 0;
         else
             tm_ctr <= tm_ctr +1;
-    end
 
 endmodule

@@ -5,13 +5,18 @@ module uart_ctl(
     input           rx,
 //  input           rts,
 
+    // Data to send.
     input    [7:0]  din,
-    input           rd,
+    // Enable transmission ( data ready ).
+    input           tx_en,
 
+    // Transmission wire.
     output          tx,
 //  output          cts,
 
+    // Received data.
     output   [7:0]  dout,
+    // Receive ends; data ready.
     output          d_rdy
 );
 
@@ -28,7 +33,7 @@ module uart_ctl(
         .clk (clk),
         .rst (rst),
         .bclk(bclk),
-        .rx (rx),
+        .rxd (rx),
 
         .dout  (dout),
         .rx_rdy(rx_rdy),
@@ -41,10 +46,9 @@ module uart_ctl(
         .bclk(bclk),
 
         .din(din),
-        .en (tx_en),
- //     .cts(cts),
+        .tx_en (tx_en),
 
-        .tx(tx),
+        .txd(tx),
         .tx_rdy(tx_rdy)
     );
 
