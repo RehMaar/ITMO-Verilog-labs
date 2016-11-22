@@ -11,16 +11,14 @@ module baud_gen #(
 );
     reg [16:0] ctr  = BAUDRATE;
 
-    always @( posedge rst ) begin
-        ctr = BAUDRATE;
-        bclk = 0;
-     end
-
     always @( posedge clk ) begin
+		  if( rst )
+				ctr <= BAUDRATE;
+				
         if( ctr == BAUDRATE )
-            bclk = 1;
+            bclk <= 1;
         else if( ctr == BAUDRATE/2 )
-            bclk = 0;
+            bclk <= 0;
 
         if( ctr == 0 )
             ctr <= BAUDRATE;

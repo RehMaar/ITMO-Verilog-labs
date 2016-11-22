@@ -18,6 +18,7 @@ module ctl(
     wire [7:0] dout_uart;
     wire [7:0] dout_io;
     wire tx_en;
+    wire tx_rdy;
 
     io_ctl io_ctl(
         .clk(clk),
@@ -27,9 +28,10 @@ module ctl(
 
         .din(dout_uart),
         .d_rdy(d_rdy),
+        .tx_rdy(tx_rdy),
 
         .dout(dout_io),
-        .rd(tx_en)
+        .rd(tx_en) // dout_io is ready.
     );
 
     uart_ctl uart_ctl(
@@ -37,22 +39,21 @@ module ctl(
         .clk(clk),
         .rst(rst),
 
-        .tx (tx),
-      //  .cts(cts),
+        .rx  (rx),
         .din(dout_io),
         .tx_en(tx_en),
 
-        .rx  (rx),
-     //   .rts (rts),
+        .tx (tx),
         .dout(dout_uart),
-        .d_rdy(d_rdy)
+        .d_rdy(d_rdy),
+        .tx_rdy(tx_rdy)
     );
 
      always @( negedge clk )
-        if( d_rdy )
+		  if( rst )
+				led <= 0;
+		  else if( d_rdy )
             led <= dout_uart;
 
-     always @( posedge rst )
-        led <=  0;
 
 endmodule

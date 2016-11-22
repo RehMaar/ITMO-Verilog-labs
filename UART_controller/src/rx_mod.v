@@ -20,27 +20,31 @@ module rx_mod(
 
     reg [7:0] rhr  = 0;
     reg [2:0] d_ctr = 0;
-    reg [1:0] state = 0;
+    reg [1:0] state 		 = 0;
 	 reg [1:0] next_state = 0;
+	 
     assign dout = rhr;
 
-    always @( posedge rst )
-        if( rst )begin
-            rhr    = 0;
-            d_ctr  = 0;
-            state  = 0;
-            rx_rdy = 1;
-            d_rdy  = 0;
-        end
-	 always @( posedge bclk )
-		state = next_state;
+	 always @( posedge bclk or posedge rst ) begin
+		if( rst )
+			state  <= 0;
+		else
+			state = next_state;
+	 end
 		
-    always @( negedge bclk )
+    always @( negedge bclk or posedge rst )
+	         if( rst )begin
+            rhr    <= 0;
+            d_ctr  <= 0;
+            rx_rdy <= 1;
+            d_rdy  <= 0;
+        end
+		  else
         case( state )
             IDLE:
                 if( rxd == STARTBIT ) begin
-                    next_state  = START;
-                    rx_rdy = 0;
+                    next_state  <= START;
+                    rx_rdy      <= 0;
                 end
             START:
 				    begin
@@ -49,18 +53,17 @@ module rx_mod(
                     rhr     <= rhr << 1;
                     rhr[0]  <= rxd;
                 if( d_ctr == 3'd7 ) begin
-                    next_state = STOP;
-                    d_ctr = 0;
-
+                    next_state <= STOP;
+                    d_ctr      <= 0;
                 end
 					 end
             STOP:
                 begin
                     if( rxd == STOPBIT ) begin
-								rx_rdy = 1;
-								d_rdy = 1;
+								rx_rdy <= 1;
+								d_rdy  <= 1;
 						  end
-						  next_state  = IDLE;
+						  next_state  <= IDLE;
                 end
         endcase
 

@@ -17,7 +17,9 @@ module uart_ctl(
     // Received data.
     output   [7:0]  dout,
     // Receive ends; data ready.
-    output          d_rdy
+    output          d_rdy,
+    // Controller ready for transmission.
+    output          tx_rdy
 );
 
     wire    bclk;
