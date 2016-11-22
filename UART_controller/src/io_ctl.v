@@ -9,57 +9,67 @@ module io_ctl(
     input               tx_rdy,
     /* Data to uart. */
     output  reg[7:0]    dout,
-    output  reg         rd
+    output             tx_en
 );
-
-    localparam TIME      = 100000000;
+    localparam TIME      = 1000000;
     localparam ECHO_MODE = 0;
     localparam SEND_MODE = 1;
 
     reg [7:0]  data [14:0];
-    reg [3:0]  d_ctr   = 0;
-    reg [26:0] tm_ctr  = 0;
-    reg        tx_flag = 0;
-
+    reg [3:0]  d_ctr    = 0;
+    reg [26:0] tm_ctr   = 0;
+	 reg			en		   = 0;
+	 
+    wire        tx_flag ;	 
+	 
+	 assign tx_flag = (tm_ctr == TIME) ? 1 : ((( d_ctr == 15 ) || ( d_ctr == 0 )) ? 0 : 1 );
+	 assign tx_en   = tx_flag;
+	 
     always @( posedge rst ) begin
-           data[0]  = "H"; data[1]  = "e";   data[2]  = "l";
-           data[3]  = "l"; data[4]  = "o";   data[5]  = ",";
-           data[6]  = " "; data[7]  = "w";   data[8]  = "o";
-           data[9]  = "r"; data[10] = "l";   data[11] = "d";
-           data[12] = "!"; data[13] = 8'h0D; data[14] = 8'h0A;
+			data[0]  = "H"; data[1]  = "e";   data[2]  = "l";
+			data[3]  = "l"; data[4]  = "o";   data[5]  = ",";
+			data[6]  = " "; data[7]  = "w";   data[8]  = "o";
+			data[9]  = "r"; data[10] = "l";   data[11] = "d";
+			data[12] = "!"; data[13] = 8'h0D; data[14] = 8'h0A;
     end
 
-    always @( negedge clk )
-            case( sw )
-                ECHO_MODE:
-                    if( d_rdy ) begin
-                        dout <= din;
-                        rd   <= 1;
-                    end
-                SEND_MODE: 
-							begin
-                        if( tm_ctr == TIME ) begin
-                            tx_flag <= 1;
-                            tm_ctr  <= 0;
-                        end
-							end
-            endcase
-/*
-    always @( tx_rdy )
-			if( tx_flag ) begin
-            dout  <= data[d_ctr];
-            d_ctr <= d_ctr + 1;
-            if( d_ctr == 15 ) begin
+    always @( negedge clk or posedge rst )
+				if( rst ) begin
+					en      <= 0;
+					dout    <= 0;
 					d_ctr   <= 0;
-					rd      <= 1;
-					tx_flag <= 0;
-				end
+			   end else
+					case( sw )
+						ECHO_MODE:
+							if( d_rdy ) begin
+									dout <= din;
+									en   <= 1;
+							end else
+								en <= 0;
+						SEND_MODE: 
+								begin
+									if( tx_flag ) begin
+										en    <= 1;
+										dout <= data[d_ctr];
+										d_ctr <= d_ctr + 1;
+									end
+									else if( d_ctr == 15 ) begin
+											en    <= 0;
+											d_ctr <= 0;
+									end
+								end
+					endcase
+					
+	always @( posedge clk or posedge rst ) begin
+			if( rst )
+				tm_ctr <= 0;
+			else if( sw == SEND_MODE ) begin
+				if( tm_ctr == TIME ) 
+					tm_ctr  <= 0;
+				else
+					tm_ctr  <= tm_ctr + 1;
 			end
-*/
-    always @( posedge clk ) begin
-		if( rst )
-            tm_ctr <= 0;
-		if( sw == SEND_MODE )
-			tm_ctr <= tm_ctr + 1;
 	end
+
+	
 endmodule

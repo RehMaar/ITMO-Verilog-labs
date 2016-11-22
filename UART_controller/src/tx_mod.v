@@ -29,7 +29,7 @@ module tx_mod(
 			if( rst )
 				state  <= 0;
 			else
-				state = next_state;
+				state <= next_state;
 
     always @( negedge bclk or posedge rst ) begin
 	     if( rst )begin
@@ -39,34 +39,34 @@ module tx_mod(
             tsr    <= 0;
         end
 	     else
-        case( state )
-            IDLE:
-                if( tx_en ) begin
-                    next_state  <= START;
-                    tx_rdy      <= 0;
-                    tsr         <= din;
-                end
-            START:
-                begin
-                    next_state <= TRANSMIT;
-                    txd        <= START_BIT;
-                end
-            TRANSMIT: 
-                begin
-                    d_ctr <= d_ctr + 1;
-                    txd   <= tsr[0];
-                    tsr   <= { 1'b0, tsr[7:1] };
-                    if( d_ctr == 3'd7 ) begin
+				case( state )
+					IDLE:
+						if( tx_en ) begin
+							next_state  <= START;
+							tx_rdy      <= 0;
+							tsr         <= din;
+						end
+					START:
+						begin
+							next_state <= TRANSMIT;
+							txd        <= START_BIT;
+						end
+					TRANSMIT: 
+						begin
+							d_ctr <= d_ctr + 1;
+							txd   <= tsr[0];
+							tsr   <= { 1'b0, tsr[7:1] };
+							if( d_ctr == 3'd7 ) begin
                         next_state <= STOP;
                         d_ctr      <= 0;
-                    end
-                end
-            STOP:
-                begin
-                    next_state <= IDLE;
-                    txd        <= STOP_BIT;
-                    tx_rdy     <= 1;
-                end
-        endcase
-         end
+							end
+						end
+					STOP:
+						begin
+							next_state <= IDLE;
+							txd        <= STOP_BIT;
+							tx_rdy     <= 1;
+						end
+				endcase
+     end
 endmodule

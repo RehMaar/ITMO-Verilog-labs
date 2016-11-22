@@ -29,7 +29,7 @@ module rx_mod(
 		if( rst )
 			state  <= 0;
 		else
-			state = next_state;
+			state <= next_state;
 	 end
 		
     always @( negedge bclk or posedge rst )

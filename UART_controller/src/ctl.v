@@ -31,7 +31,7 @@ module ctl(
         .tx_rdy(tx_rdy),
 
         .dout(dout_io),
-        .rd(tx_en) // dout_io is ready.
+        .tx_en(tx_en) // dout_io is ready.
     );
 
     uart_ctl uart_ctl(

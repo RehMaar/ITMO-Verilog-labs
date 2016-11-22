@@ -42,7 +42,7 @@ module uart_ctl(
         .d_rdy (d_rdy)
     );
 
-    tx_mod tx_mod(
+    tx_ctl tx_ctl(
         .clk (clk),
         .rst (rst),
         .bclk(bclk),
