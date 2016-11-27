@@ -11,7 +11,7 @@ module io_ctl(
     output  reg[7:0]    dout,
     output             tx_en
 );
-    localparam TIME      = 1000000;
+    localparam TIME      = 100000;
     localparam ECHO_MODE = 0;
     localparam SEND_MODE = 1;
 

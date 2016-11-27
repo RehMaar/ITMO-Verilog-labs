@@ -1,54 +1,79 @@
-module fifo (
-    input                      clk,
-    input                      rst,
+module fifo #( 
+    parameter DEPTH = 16,
+    parameter CAPACITY = 8
+) (
+    input                          clk,
+    input                          rst,
 
-    input                      rd,
-    input                      wr,
-    input    [7:0]    din,
+    input                          rd,
+    input                          wr,
+    input        [CAPACITY-1:0]    din,
 
-    output                     full,
-    output                     empty,
-    output   [7:0]    dout
+    output                         full,
+    output                         empty,
+    output   reg [CAPACITY-1:0]    dout
 );
 
     integer i;
+    localparam WRITE = 0;
+    localparam READ  = 1;
 
-    reg [7:0]      mem [15:0];
-    reg [4:0] raddr    = 0;
-    reg [4:0] waddr    = 0;
-    reg [7:0] data_out = 0;
-	 reg [5:0] d_ctr    = 0;
-    reg fifo_full = 0;
+    reg [CAPACITY-1:0]      mem [DEPTH-1:0];
+    reg [$clog2(DEPTH)-1:0] raddr    = 0;
+    reg [$clog2(DEPTH)-1:0] waddr    = 0;
 
-    assign dout = data_out; // ( empty ) ? 0 : mem[raddr];
-    
-	 assign full = ( d_ctr == 15 );
-    assign empty = ( waddr == raddr ) & !full;
-    
+    reg state;
+    reg fifo_full;
+    reg fifo_empty;
 
-    always @( negedge clk or posedge rst ) begin
+    assign empty = fifo_empty;
+    assign full  = fifo_full;
+
+    always @( posedge clk or posedge rst ) begin
         if( rst ) begin
-            for( i = 0; i <= 15; i = i + 1 ) 
+            for( i = 0; i <= DEPTH-1; i = i + 1 ) 
                 mem[i] <= 0;
-				waddr     <= 0;
-				raddr     <= 0;
-				fifo_full <= 0;
-				data_out  <= 0;
-				d_ctr     <= 0;
+            waddr     <= 0;
+            raddr     <= 0;
+            dout      <= 0;
+            fifo_full <= 0;
         end
         else begin
-            if( wr & !full ) begin
+            if( wr & !fifo_full ) begin
                 mem[waddr] <= din;
-                waddr <= waddr + 1'b1;
-					 d_ctr <= d_ctr + 1'b1;
+                waddr      <= waddr+1'b1;
+                state      <= WRITE;
             end
             else if( rd & !empty ) begin
-                data_out  <= mem[raddr];
-                raddr     <= raddr + 1'b1;
-					 fifo_full <= 1'b0;
-					 d_ctr     <= d_ctr - 1'b1;
+                dout  <= mem[raddr];
+                raddr <= raddr + 1'b1;
+                state <= READ;
             end
         end
     end
+
+    always @( negedge clk or posedge rst )
+        if( rst ) begin
+            fifo_full  <= 0;
+            fifo_empty <= 1;
+        end else
+            case( state )
+                READ: 
+                begin
+                    fifo_full <= 0;
+                    if( waddr == raddr )
+                        fifo_empty <= 1;
+                    else
+                        fifo_empty <= 0;
+                end
+                WRITE:
+                begin
+                    fifo_empty <= 0;
+                    if( waddr == raddr )
+                        fifo_full <= 1;
+                    else
+                        fifo_full <= 0;
+                end
+            endcase
 
 endmodule
