@@ -6,8 +6,6 @@ module rx_mod(
     input          rxd,
 
     output   [7:0] dout,
-    // Ready to receive data.
-    output  reg    rx_rdy,
     output  reg    d_rdy
 );
 
@@ -36,7 +34,6 @@ module rx_mod(
         if( rst )begin
             rhr    <= 0;
             d_ctr  <= 0;
-            rx_rdy <= 1;
             d_rdy  <= 0;
         end else
             case( state )
@@ -45,7 +42,6 @@ module rx_mod(
                     d_rdy <= 0;
                     if( rxd == STARTBIT ) begin
                         next_state  <= START;
-                        rx_rdy      <= 0;
                     end
                 end
                 START:
@@ -62,7 +58,6 @@ module rx_mod(
                 STOP:
                     begin
                         if( rxd == STOPBIT ) begin
-                            rx_rdy <= 1;
                             d_rdy  <= 1;
                         end
                         next_state  <= IDLE;

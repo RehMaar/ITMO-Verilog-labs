@@ -23,7 +23,6 @@ module io_ctl(
     wire tx_flag;
 
     assign tx_flag = (tm_ctr == TIME) ? 1 : ((( d_ctr == 15 ) || ( d_ctr == 0 )) ? 0 : 1 );
-    //assign tx_en   = tx_flag;
 
     always @( posedge rst ) begin
             data[0]  = "H"; data[1]  = "e";   data[2]  = "l";
@@ -38,20 +37,20 @@ module io_ctl(
              tx_en   <= 0;
              dout    <= 0;
              d_ctr   <= 0;
-             was_d_rdy = 0;
+             was_d_rdy <= 0;
         end else
              case( sw )
                  ECHO_MODE:
                      if( d_rdy && !was_d_rdy ) begin
-                        dout  <= din;
-                        tx_en <= 1;
+                        dout      <= din;
+                        tx_en     <= 1;
                         was_d_rdy <= d_rdy;
                      end 
                      else begin
-                        tx_en <= 0;
+                        tx_en     <= 0;
                         was_d_rdy <= d_rdy;
                     end
-                 SEND_MODE: 
+                 SEND_MODE:
                     begin
                         if( tx_flag ) begin
                             tx_en <= 1;

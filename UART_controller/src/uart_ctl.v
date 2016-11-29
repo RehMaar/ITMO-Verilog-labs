@@ -38,7 +38,6 @@ module uart_ctl(
         .rxd (rx),
 
         .dout  (dout),
-        .rx_rdy(rx_rdy),
         .d_rdy (d_rdy)
     );
 

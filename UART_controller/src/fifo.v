@@ -39,7 +39,6 @@ module fifo #(
             waddr     <= 0;
             raddr     <= 0;
             dout      <= 0;
-            fifo_full <= 0;
         end
         else begin
             if( wr & !fifo_full ) begin
