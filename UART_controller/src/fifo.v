@@ -1,3 +1,6 @@
+/* Read and write on posedge clk.
+ * Set states of fullness and emptiness by negedge. 
+ */
 module fifo #( 
     parameter DEPTH = 16,
     parameter CAPACITY = 8
@@ -56,9 +59,10 @@ module fifo #(
         if( rst ) begin
             fifo_full  <= 0;
             fifo_empty <= 1;
-        end else
+        end
+        else
             case( state )
-                READ: 
+                READ:
                 begin
                     fifo_full <= 0;
                     if( waddr == raddr )

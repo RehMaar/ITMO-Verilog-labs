@@ -5,7 +5,7 @@ module tx_mod(
 
     input           bclk,
     input   [7:0]   din,
-    // Data ready for transmission.
+    /* Data ready for transmission.*/
     input           tx_en,
 
     output   reg    txd,
@@ -24,14 +24,19 @@ module tx_mod(
     reg [1:0]state      = 0;
     reg [2:0]d_ctr      = 0;
     reg [7:0]tsr        = 0;
+    reg [7:0]thr        = 0;
+
 
     always @( posedge clk or posedge rst )
         if( rst )
             tx_rdy <= 1;
-        else if( tx_en ) begin
+        else if( tx_en )
             tx_rdy <= 0;
-        end else if( state == IDLE && txd )
+        /* Doesn't work. Need tx_rdy signal changes once on one full
+         * transmission.*/
+        else if( next_state == IDLE && state == STOP )
             tx_rdy <= 1;
+
 
     always @( posedge bclk )
         if( rst )
@@ -44,7 +49,8 @@ module tx_mod(
             d_ctr  <= 0;
             txd    <= 1;
             tsr    <= 0;
-        end else
+        end
+        else
             case( state )
                 IDLE:
                     if( !tx_rdy ) begin

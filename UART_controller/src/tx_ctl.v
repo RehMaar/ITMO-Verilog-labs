@@ -15,8 +15,7 @@ module tx_ctl(
     reg rd = 0;
     reg en = 0;
 
-    wire [7:0] dout;
-    wire       rd_en;
+    wire [7:0] fifo_dout;
 
 
     fifo tx_fifo(
@@ -25,11 +24,13 @@ module tx_ctl(
 
         .rd (rd),
         .wr (wr),
+        /* On next clk data is in memory. */
         .din(din),
 
         .full (fifo_full),
         .empty(fifo_empty),
-        .dout (dout)
+        /* On next clk after the rd signal data is in dout. */
+        .dout (fifo_dout)
     );
 
     tx_mod tx_mod(
@@ -38,7 +39,7 @@ module tx_ctl(
 
         .bclk(bclk),
         /* Data to transmit. */
-        .din(dout),
+        .din(fifo_dout),
         /* Data ready to transmit. */
         .tx_en(en),
         /* TX-pin */
@@ -50,24 +51,42 @@ module tx_ctl(
     /* Read data from  buffer to thr for transmission.
      */
     always @( posedge clk )
-        if( !fifo_empty && tx_rdy && !wr )
+        if( rst ) begin
+            rd <= 0;
+        end
+        else if( rd ) begin
+            rd <= 0;
+        end
+        /* If fifo isn't empty, tx ready for transmission and no writing
+         * we can read from fifo.
+         * Need tx_rdy to be in untill next transmision.
+         */
+        else if( !fifo_empty && tx_rdy && !wr ) begin
             rd <= 1;
+        end
         else
             rd <= 0;
 
-    /* Write data from input to fifo-buffer.
-     * If need to read, set en on negedge ( data should be ready ).
-     * tx_mod have to say, that it've understood out transmitting wish and
-     * set tx_rdy to 0. If tx_rdy is zero we set en to zero to prevent trash.
-     */
-    always @( negedge clk ) begin
-        if( rd )
-            en <= 1;
-        else if( !tx_rdy )
-            en <= 0;
-        else if( tx_en && !fifo_full && !rd )
-            wr <= 1;
-        else
+
+    /* Write data from input to fifo-buffer.*/
+    always @( negedge clk )
+        if( rst ) begin
             wr <= 0;
-    end
+            en <= 0;
+        end
+        else begin
+        /*
+        * If fifo isn't full, input data is enabled  and no reading
+        * we can write to fifo.
+        */
+            if( tx_en && !fifo_full && !rd )
+                wr <= 1;
+            else
+                wr <= 0;
+
+            if( rd )
+                en <= 1;
+            else
+                en <= 0;
+        end
 endmodule
