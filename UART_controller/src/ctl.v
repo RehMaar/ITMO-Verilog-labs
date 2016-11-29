@@ -19,6 +19,7 @@ module ctl(
     wire [7:0] dout_io;
     wire tx_en;
     wire tx_rdy;
+    wire d_rdy;
 
     io_ctl io_ctl(
         .clk(clk),
@@ -50,9 +51,9 @@ module ctl(
     );
 
      always @( negedge clk )
-		  if( rst )
-				led <= 0;
-		  else if( d_rdy )
+          if( rst )
+                led <= 0;
+          else if( d_rdy )
             led <= dout_uart;
 
 

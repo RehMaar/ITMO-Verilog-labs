@@ -11,8 +11,8 @@ module rx_mod(
     output  reg    d_rdy
 );
 
-     localparam STARTBIT = 0;
-     localparam STOPBIT  = 1;
+    localparam STARTBIT = 0;
+    localparam STOPBIT  = 1;
 
     localparam IDLE     = 2'b00;
     localparam START    = 2'b01;
@@ -41,10 +41,13 @@ module rx_mod(
         end else
             case( state )
                 IDLE:
+                begin
+                    d_rdy <= 0;
                     if( rxd == STARTBIT ) begin
                         next_state  <= START;
                         rx_rdy      <= 0;
                     end
+                end
                 START:
                     begin
                         d_ctr <= d_ctr + 1'b1;
@@ -60,7 +63,7 @@ module rx_mod(
                     begin
                         if( rxd == STOPBIT ) begin
                             rx_rdy <= 1;
-                                d_rdy  <= 1;
+                            d_rdy  <= 1;
                         end
                         next_state  <= IDLE;
                     end

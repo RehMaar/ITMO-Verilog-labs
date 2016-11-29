@@ -17,26 +17,45 @@ module tx_mod(
     localparam TRANSMIT = 2'b10;
     localparam STOP     = 2'b11;
 
+    localparam READY    = 1'd1;
+
     localparam START_BIT = 0;
     localparam STOP_BIT  = 1;
 
-    reg [1:0]next_state = 0;
-    reg [1:0]state      = 0;
+    reg [1:0]next_state = IDLE;
+    reg [1:0]state      = IDLE;
+    reg [1:0]was_state  = IDLE;
     reg [2:0]d_ctr      = 0;
     reg [7:0]tsr        = 0;
     reg [7:0]thr        = 0;
 
+    reg rstate = 0;
+
 
     always @( posedge clk or posedge rst )
-        if( rst )
-            tx_rdy <= 1;
-        else if( tx_en )
-            tx_rdy <= 0;
-        /* Doesn't work. Need tx_rdy signal changes once on one full
-         * transmission.*/
-        else if( next_state == IDLE && state == STOP )
-            tx_rdy <= 1;
-
+        if( rst ) begin
+            rstate    = IDLE;
+            tx_rdy    = 1;
+            was_state = IDLE;
+        end
+        else
+            case( rstate )
+                IDLE:
+                    if( tx_en ) begin
+                        tx_rdy  = 0;
+                        rstate  = READY;
+                    end
+                    else
+                        tx_rdy = 1;
+                READY:
+                    if( state == IDLE && was_state == STOP ) begin
+                        tx_rdy    = 1;
+                        rstate    = IDLE;
+                        was_state = state;
+                    end
+                    else
+                        was_state = state;
+            endcase
 
     always @( posedge bclk )
         if( rst )
