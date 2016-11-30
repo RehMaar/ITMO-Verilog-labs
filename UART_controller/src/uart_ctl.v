@@ -2,24 +2,23 @@ module uart_ctl(
     input           clk,
     input           rst,
 
+    /* I/O buses. */
     input           rx,
-//  input           rts,
-
-    // Data to send.
-    input    [7:0]  din,
-    // Enable transmission ( data ready ).
-    input           tx_en,
-
-    // Transmission wire.
     output          tx,
-//  output          cts,
 
-    // Received data.
+    /* Data to send. */
+    input    [7:0]  din,
+    /* Data to send is ready. */
+    input           din_rdy,
+
+    /* Received data. */
     output   [7:0]  dout,
-    // Receive ends; data ready.
+    /* Receive ends; data ready. */
     output          d_rdy,
-    // Controller ready for transmission.
-    output          tx_rdy
+    /* Controller ready for transmission. */
+    output          tx_rdy,
+    /* Controller ready for reception. */
+    output          rx_rdy
 );
 
     wire    bclk;
@@ -31,14 +30,16 @@ module uart_ctl(
         .bclk(bclk)
     );
 
-    rx_mod rx_mod(
+    rx_ctl rx_ctl(
         .clk (clk),
         .rst (rst),
-        .bclk(bclk),
-        .rxd (rx),
 
-        .dout  (dout),
-        .d_rdy (d_rdy)
+        .bclk(bclk),
+        .rx  (rx),
+
+        .dout     (dout),
+        .dout_rdy (dout_rdy),
+        .rx_rdy   (rx_rdy)
     );
 
     tx_ctl tx_ctl(
@@ -46,10 +47,10 @@ module uart_ctl(
         .rst (rst),
         .bclk(bclk),
 
-        .din(din),
-        .tx_en (tx_en),
+        .din    (din),
+        .din_rdy(din_rdy),
 
-        .txd(tx),
+        .tx    (tx),
         .tx_rdy(tx_rdy)
     );
 

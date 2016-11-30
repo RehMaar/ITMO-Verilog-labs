@@ -4,11 +4,10 @@ module tx_ctl(
 
     input           bclk,
     input   [7:0]   din,
-    input           tx_en,  // din ready
-//    input           cts,
+    input           din_rdy,
 
     output          txd,
-    output          tx_rdy  // 0 -- in process of transmission, 1 otherwise.
+    output          tx_rdy
 );
 
     reg wr = 0;
@@ -33,7 +32,7 @@ module tx_ctl(
         .dout (fifo_dout)
     );
 
-    tx_mod tx_mod(
+    tx tx(
         .clk(clk),
         .rst(rst),
 
@@ -41,7 +40,7 @@ module tx_ctl(
         /* Data to transmit. */
         .din(fifo_dout),
         /* Data ready to transmit. */
-        .tx_en(en),
+        .din_rdy(en),
         /* TX-pin */
         .txd(txd),
         /* Transmitter is ready ( 1 ), is busy ( 0 ). */
@@ -76,10 +75,10 @@ module tx_ctl(
         end
         else begin
         /*
-        * If fifo isn't full, input data is enabled  and no reading
-        * we can write to fifo.
-        */
-            if( tx_en && !fifo_full && !rd )
+         * If fifo isn't full, input data is enabled  and no reading
+         * we can write to fifo.
+         */
+            if( din_rdy && !fifo_full && !rd )
                 wr <= 1;
             else
                 wr <= 0;
