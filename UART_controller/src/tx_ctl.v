@@ -6,7 +6,7 @@ module tx_ctl(
     input   [7:0]   din,
     input           din_rdy,
 
-    output          txd,
+    output          tx,
     output          tx_rdy
 );
 
@@ -32,7 +32,7 @@ module tx_ctl(
         .dout (fifo_dout)
     );
 
-    tx tx(
+    tx tx_mod(
         .clk(clk),
         .rst(rst),
 
@@ -42,7 +42,7 @@ module tx_ctl(
         /* Data ready to transmit. */
         .din_rdy(en),
         /* TX-pin */
-        .txd(txd),
+        .tx(tx),
         /* Transmitter is ready ( 1 ), is busy ( 0 ). */
         .tx_rdy(tx_rdy)
     );

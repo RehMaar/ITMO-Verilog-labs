@@ -54,7 +54,7 @@ module io_ctl #(
     always @( posedge clk or posedge rst ) begin
         if( rst ) begin
             was_din_rdy <= 0;
-            tx_en       <= 0;
+            dout_rdy    <= 0;
             dout        <= 0;
             d_ctr       <= 0;
         end
@@ -65,22 +65,22 @@ module io_ctl #(
                     if( din_rdy && !was_din_rdy ) begin
                         was_din_rdy <= din_rdy;
                         dout        <= din;
-                        tx_en       <= 1;
+                        dout_rdy    <= 1;
                     end
                     else begin
                         was_din_rdy <= din_rdy;
-                        tx_en       <= 0;
+                        dout_rdy    <= 0;
                     end
                 end
                 SEND_MODE:
                 begin
                     if( tx_flag ) begin
-                        tx_en <= 1;
-                        dout  <= data[d_ctr];
-                        d_ctr <= d_ctr + 1;
+                        dout_rdy <= 1;
+                        dout     <= data[d_ctr];
+                        d_ctr    <= d_ctr + 1;
                     end
                     else if( d_ctr == 15 ) begin
-                        tx_en    <= 0;
+                        dout_rdy <= 0;
                         d_ctr    <= 0;
                     end
                 end
