@@ -47,7 +47,8 @@ module ctl(
      always @(negedge clk)
           if (rst)
             led <= 0;
-          else if (dout_uart_rdy)
+          /* SW == 0: echo mode; SW = 1: send mode. */
+          else if ( !sw && dout_uart_rdy)
             led <= dout_uart;
 
 

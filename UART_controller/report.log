@@ -1,9 +1,15 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.11.25)  5 DEC 2016 22:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.11.25)  5 DEC 2016 21:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **report.tex
-(./report.tex
+(./report/report.tex
+! Interruption.
+<to be read again> 
+                   \begingroup 
+l.1 
+    \documentclass[a4paper, 10pt]{article}
+? 
 LaTeX2e <2016/03/31> patch level 3
 Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
 (/usr/share/texmf-dist/tex/latex/base/article.cls
@@ -1072,47 +1078,27 @@ Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \@vwid@loff=\dimen196
 \@vwid@roff=\dimen197
 ))
-(/usr/share/texmf-dist/tex/latex/graphics/rotating.sty
-Package: rotating 2016/05/22 v2.16c rotated objects in LaTeX
-
-(/usr/share/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-)
-\c@r@tfl@t=\count141
-\rotFPtop=\skip61
-\rotFPbot=\skip62
-\rot@float@box=\box47
-\rot@mess@toks=\toks41
-)
-(/usr/share/texmf-dist/tex/latex/oberdiek/pdflscape.sty
-Package: pdflscape 2016/05/14 v0.11 Display of landscape pages in PDF (HO)
-
-(/usr/share/texmf-dist/tex/latex/graphics/lscape.sty
-Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
-)
-Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
-) (./report.aux
-LaTeX Font Info:    Try loading font information for T2A+cmr on input line 4.
-
-(/usr/share/texmf-dist/tex/latex/cyrillic/t2acmr.fd
-File: t2acmr.fd 2001/08/11 v1.0a Computer Modern Cyrillic font definitions
-))
+No file report.aux.
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for T2A/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T2A/cmr/m/n on input line 36.
+LaTeX Font Info:    Try loading font information for T2A+cmr on input line 36.
+(/usr/share/texmf-dist/tex/latex/cyrillic/t2acmr.fd
+File: t2acmr.fd 2001/08/11 v1.0a Computer Modern Cyrillic font definitions
+)
+LaTeX Font Info:    ... okay on input line 36.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: listings package is loaded.
 Package caption Info: longtable package is loaded.
@@ -1120,7 +1106,6 @@ Package caption Info: longtable package is loaded.
 (/usr/share/texmf-dist/tex/latex/caption/ltcaption.sty
 Package: ltcaption 2013/06/09 v1.4-94 longtable captions (AR)
 )
-Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
 *geometry* driver: auto-detecting
@@ -1157,20 +1142,20 @@ Package caption Info: End \AtBeginDocument code.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\c@lstlisting=\count142
+\c@lstlisting=\count141
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count143
+\scratchcounter=\count142
 \scratchdimen=\dimen198
-\scratchbox=\box48
-\nofMPsegments=\count144
-\nofMParguments=\count145
-\everyMPshowfont=\toks42
-\MPscratchCnt=\count146
+\scratchbox=\box47
+\nofMPsegments=\count143
+\nofMParguments=\count144
+\everyMPshowfont=\toks41
+\MPscratchCnt=\count145
 \MPscratchDim=\dimen199
-\MPnumerator=\count147
-\makeMPintoPDFobject=\count148
-\everyMPtoPDFconversion=\toks43
+\MPnumerator=\count146
+\makeMPintoPDFobject=\count147
+\everyMPtoPDFconversion=\toks42
 ) (/usr/share/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2016/05/21 v0.22 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -1219,106 +1204,89 @@ e
 ))
 ABD: EveryShipout initializing macros [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] <../images/rtl_ctl.png, id
-=13, 612.2875pt x 418.56375pt>
-File: ../images/rtl_ctl.png Graphic file (type png)
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] <images/../images/rtl_uart
+.png, id=13, 753.81625pt x 403.5075pt>
+File: images/../images/rtl_uart.png Graphic file (type png)
 
-<use ../images/rtl_ctl.png>
-Package pdftex.def Info: ../images/rtl_ctl.png used on input line 92.
-(pdftex.def)             Requested size: 428.59833pt x 292.99261pt.
+<use images/../images/rtl_uart.png>
+Package pdftex.def Info: images/../images/rtl_uart.png used on input line 89.
+(pdftex.def)             Requested size: 527.66779pt x 282.45332pt.
 
-<../images/rtl_io.png, id=14, 776.9025pt x 306.14375pt>
-File: ../images/rtl_io.png Graphic file (type png)
-
-<use ../images/rtl_io.png>
-Package pdftex.def Info: ../images/rtl_io.png used on input line 95.
-(pdftex.def)             Requested size: 310.7555pt x 122.45532pt.
- [1 <../images/rtl_ctl.png> <../images/rtl_io.png>]
-<../images/rtl_uart.png, id=19, 753.81625pt x 403.5075pt>
-File: ../images/rtl_uart.png Graphic file (type png)
-
-<use ../images/rtl_uart.png>
-Package pdftex.def Info: ../images/rtl_uart.png used on input line 99.
-(pdftex.def)             Requested size: 753.81442pt x 403.50652pt.
-
-Overfull \hbox (8.3522pt too wide) in paragraph at lines 99--100
+Overfull \hbox (15.51816pt too wide) in paragraph at lines 89--90
 [][] 
  []
 
-[2 <../images/rtl_uart.png>]
-<../images/ctl_plot.png, id=23, 1075.01625pt x 171.64125pt>
-File: ../images/ctl_plot.png Graphic file (type png)
+<images/../images/ctl_plot.png, id=14, 1075.01625pt x 171.64125pt>
+File: images/../images/ctl_plot.png Graphic file (type png)
 
-<use ../images/ctl_plot.png>
-Package pdftex.def Info: ../images/ctl_plot.png used on input line 104.
+<use images/../images/ctl_plot.png>
+Package pdftex.def Info: images/../images/ctl_plot.png used on input line 94.
 (pdftex.def)             Requested size: 537.50682pt x 85.8204pt.
 
-Overfull \hbox (25.3572pt too wide) in paragraph at lines 104--105
+Overfull \hbox (25.3572pt too wide) in paragraph at lines 94--95
 [][] 
  []
 
-<../images/ctl_plot_send_mode.png, id=24, 912.40875pt x 174.6525pt>
-File: ../images/ctl_plot_send_mode.png Graphic file (type png)
+<images/../images/ctl_plot_send_mode.png, id=15, 912.40875pt x 174.6525pt>
+File: images/../images/ctl_plot_send_mode.png Graphic file (type png)
 
-<use ../images/ctl_plot_send_mode.png>
-Package pdftex.def Info: ../images/ctl_plot_send_mode.png used on input line 10
-7.
+<use images/../images/ctl_plot_send_mode.png>
+Package pdftex.def Info: images/../images/ctl_plot_send_mode.png used on input 
+line 97.
 (pdftex.def)             Requested size: 456.20326pt x 87.32603pt.
 
-(/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2015/06/04 1.6 listings language file
-)
-(/usr/share/texmf-dist/tex/latex/listings/lstlang2.sty
-File: lstlang2.sty 2015/06/04 1.6 listings language file
-)
-(/usr/share/texmf-dist/tex/latex/listings/lstlang3.sty
-File: lstlang3.sty 2015/06/04 1.6 listings language file
-) (../src/ctl.v
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 1.
 
-(/usr/share/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <8> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1.
- [3
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
- <../images/ctl_plot.png> <../images/ctl_plot_send_mode.png>]) (../src/io_ctl.v
-LaTeX Font Info:    Try loading font information for U+msa on input line 6.
+! Package Listings Error: File `../src/ctl(.v)' not found.
 
-(/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 6.
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: v)
 
-(/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [4]) (../src/uart_ctl.v)
-[5] (../src/rx.v [6]) (../src/tx_ctl.v [7]) (../src/tx.v [8]) (../src/fifo.v
-[9]) (../src/baud_gen.v [10]) [11] (./report.aux) ) 
+Enter file name: 
+! Interruption.
+<to be read again> 
+                   }
+l.101 ...utlisting[language=Verilog]{../src/ctl.v}
+                                                  ^^M
+? 
+! Undefined control sequence.
+\\lst@inputlisting ...}}\reserved@a }\lst@doendpe 
+                                                  \@newlistfalse \ignorespaces 
+l.101 ...utlisting[language=Verilog]{../src/ctl.v}
+                                                  
+? q
+OK, entering \batchmode...
+
+! Interruption.
+<to be read again> 
+                   \let 
+l.101 ...utlisting[language=Verilog]{../src/ctl.v}
+                                                  
+? q
+OK, entering \batchmode...
+
+! Package Listings Error: File `../src/io_ctl(.v)' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: v)
+
+ Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.102 ...isting[language=Verilog]{../src/io_ctl.v}
+                                                  ^^M
+*** (cannot \read from terminal in nonstop modes)
+
+ 
 Here is how much of TeX's memory you used:
- 18180 strings out of 493013
- 322244 string characters out of 6139316
- 790678 words of memory out of 5000000
- 21306 multiletter control sequences out of 15000+600000
- 17158 words of font info for 41 fonts, out of 8000000 for 9000
+ 17274 strings out of 493013
+ 311625 string characters out of 6139316
+ 363250 words of memory out of 5000000
+ 20477 multiletter control sequences out of 15000+600000
+ 8441 words of font info for 20 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,12n,75p,387b,2000s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts
-/enc/dvips/cm-super/cm-super-t2a.enc}</usr/share/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx08
-00.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/sh
-are/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></usr/share/texmf-dist/
-fonts/type1/public/cm-super/sfrm0500.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/cm-super/sfrm0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sf
-rm1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></us
-r/share/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></usr/share/texmf-d
-ist/fonts/type1/public/cm-super/sfxc1200.pfb>
-Output written on report.pdf (12 pages, 274922 bytes).
-PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
- 62 compressed objects within 1 object stream
- 0 named destinations out of 1000 (max. 500000)
- 38 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+ 55i,7n,54p,387b,306s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!

@@ -27,7 +27,10 @@
 }
 \usepackage[export]{adjustbox}
 \usepackage{graphicx}
-\graphicspath{ {images/} }
+%\graphicspath{ {images/} }
+
+\usepackage{rotating}
+\usepackage{pdflscape}
 
 \renewcommand{\headrulewidth}{0pt}
 \fancyfoot[L] {\thepage\bf}
@@ -85,26 +88,34 @@
         \end{enumerate} 
 
      \section*{RTL модель}
-        \begin{figure}[h!]
-            \includegraphics[scale=0.5]{../images/rtl.png}
+        \begin{figure}[ht]
+            \includegraphics[scale=0.7]{../images/rtl_ctl.png}
         \end{figure}
-
+        \begin{figure}[ht]
+            \includegraphics[scale=0.4]{../images/rtl_io.png}
+        \end{figure}
+        \begin{landscape}
+            \begin{figure}[ht]
+                \includegraphics{../images/rtl_uart.png}
+            \end{figure}
+        \end{landscape}
      \section*{Временные диаграммы}
         \begin{figure}[h!]
-            \includegraphics[scale=0.5]{../images/echo_mode.png}
+            \includegraphics[scale=0.5]{../images/ctl_plot.png}
         \end{figure}
         \begin{figure}[h!]
-            \includegraphics[scale=0.5]{../images/transmission.png}
+            \includegraphics[scale=0.5]{../images/ctl_plot_send_mode.png}
         \end{figure}
 
      \section*{Листинг}
         \lstinputlisting[language=Verilog]{../src/ctl.v}
         \lstinputlisting[language=Verilog]{../src/io_ctl.v}
         \lstinputlisting[language=Verilog]{../src/uart_ctl.v}
-        \lstinputlisting[language=Verilog]{../src/rx_mod.v}
+        \lstinputlisting[language=Verilog]{../src/rx.v}
         \lstinputlisting[language=Verilog]{../src/tx_ctl.v}
-        \lstinputlisting[language=Verilog]{../src/tx_mod.v}
+        \lstinputlisting[language=Verilog]{../src/tx.v}
         \lstinputlisting[language=Verilog]{../src/fifo.v}
+        \lstinputlisting[language=Verilog]{../src/baud_gen.v}
 
     \section*{Вывод}
         В ходы выполнения лабораторной работы были исследованы принципы работы

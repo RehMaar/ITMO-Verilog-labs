@@ -17,7 +17,7 @@ module rx(
     localparam STOP     = 2'd2;
 
 
-    reg [7:0] rhr   = 0;
+    reg [7:0] rsr   = 0;
 
     reg [2:0] d_ctr      = 0;
     reg [1:0] next_state = 0;
@@ -41,7 +41,7 @@ module rx(
             dout_rdy   <= 0;
             rx_rdy     <= 1;
             d_ctr      <= 0;
-            rhr        <= 0;
+            rsr        <= 0;
             dout       <= 0;
         end
         else begin
@@ -59,8 +59,8 @@ module rx(
                     START:
                     begin
                         d_ctr  <= d_ctr + 1'b1;
-                        rhr    <= rhr << 1;
-                        rhr[0] <= rx;
+                        rsr    <= rsr << 1;
+                        rsr[0] <= rx;
                         if (3'd7 == d_ctr) begin
                             next_state <= STOP;
                             d_ctr      <= 0;
@@ -70,7 +70,7 @@ module rx(
                     begin
                         if (STOP_BIT == rx) begin
                             dout_rdy <= 1;
-                            dout     <= rhr;
+                            dout     <= rsr;
                         end
                         next_state <= IDLE;
                         rx_rdy     <= 0;
