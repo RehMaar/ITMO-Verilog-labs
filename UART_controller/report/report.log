@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.11.25)  5 DEC 2016 22:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.11.25)  6 DEC 2016 09:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1224,24 +1224,24 @@ ABD: EveryShipout initializing macros [1
 File: ../images/rtl_ctl.png Graphic file (type png)
 
 <use ../images/rtl_ctl.png>
-Package pdftex.def Info: ../images/rtl_ctl.png used on input line 92.
+Package pdftex.def Info: ../images/rtl_ctl.png used on input line 93.
 (pdftex.def)             Requested size: 428.59833pt x 292.99261pt.
 
 <../images/rtl_io.png, id=14, 776.9025pt x 306.14375pt>
 File: ../images/rtl_io.png Graphic file (type png)
 
 <use ../images/rtl_io.png>
-Package pdftex.def Info: ../images/rtl_io.png used on input line 95.
+Package pdftex.def Info: ../images/rtl_io.png used on input line 96.
 (pdftex.def)             Requested size: 310.7555pt x 122.45532pt.
  [1 <../images/rtl_ctl.png> <../images/rtl_io.png>]
 <../images/rtl_uart.png, id=19, 753.81625pt x 403.5075pt>
 File: ../images/rtl_uart.png Graphic file (type png)
 
 <use ../images/rtl_uart.png>
-Package pdftex.def Info: ../images/rtl_uart.png used on input line 99.
+Package pdftex.def Info: ../images/rtl_uart.png used on input line 100.
 (pdftex.def)             Requested size: 753.81442pt x 403.50652pt.
 
-Overfull \hbox (8.3522pt too wide) in paragraph at lines 99--100
+Overfull \hbox (8.3522pt too wide) in paragraph at lines 100--101
 [][] 
  []
 
@@ -1250,10 +1250,10 @@ Overfull \hbox (8.3522pt too wide) in paragraph at lines 99--100
 File: ../images/ctl_plot.png Graphic file (type png)
 
 <use ../images/ctl_plot.png>
-Package pdftex.def Info: ../images/ctl_plot.png used on input line 104.
+Package pdftex.def Info: ../images/ctl_plot.png used on input line 105.
 (pdftex.def)             Requested size: 537.50682pt x 85.8204pt.
 
-Overfull \hbox (25.3572pt too wide) in paragraph at lines 104--105
+Overfull \hbox (25.3572pt too wide) in paragraph at lines 105--106
 [][] 
  []
 
@@ -1262,7 +1262,7 @@ File: ../images/ctl_plot_send_mode.png Graphic file (type png)
 
 <use ../images/ctl_plot_send_mode.png>
 Package pdftex.def Info: ../images/ctl_plot_send_mode.png used on input line 10
-7.
+8.
 (pdftex.def)             Requested size: 456.20326pt x 87.32603pt.
 
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
@@ -1315,7 +1315,7 @@ lic/cm-super/sfrm0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sf
 rm1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></us
 r/share/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></usr/share/texmf-d
 ist/fonts/type1/public/cm-super/sfxc1200.pfb>
-Output written on report.pdf (12 pages, 274922 bytes).
+Output written on report.pdf (12 pages, 274962 bytes).
 PDF statistics:
  92 PDF objects out of 1000 (max. 8388607)
  62 compressed objects within 1 object stream
