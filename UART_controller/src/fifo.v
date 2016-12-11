@@ -32,7 +32,7 @@ module fifo #(
     assign empty = fifo_empty;
     assign full  = fifo_full;
 
-    always @( posedge clk or posedge rst ) begin
+    always @(posedge clk or posedge rst) begin
         if( rst ) begin
             for( i = 0; i <= DEPTH-1; i = i + 1 ) 
                 mem[i] <= 0;
@@ -54,7 +54,7 @@ module fifo #(
         end
     end
 
-    always @( negedge clk or posedge rst )
+    always @(negedge clk or posedge rst)
         if( rst ) begin
             fifo_full  <= 0;
             fifo_empty <= 1;

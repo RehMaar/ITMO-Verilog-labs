@@ -1,101 +1,90 @@
-// din [ d7 d6 d5 d4 d3 d2 d1 d0 ] > txd -- ( d7 d6 d5 d4 d3 d2 d1 d0 ) -->
-module tx_mod(
-    input           clk,
-    input           rst,
+module tx(
+    input         clk,
+    input         rst,
 
-    input           bclk,
-    input   [7:0]   din,
-    /* Data ready for transmission.*/
-    input           tx_en,
+    input         bclk,
+    input   [7:0] din,
+    input         din_rdy,
 
-    output   reg    txd,
-    output   reg    tx_rdy  // 0 -- in process of transmission, 1 otherwise.
+    output  reg   tx,
+    output  reg   tx_rdy
+
 );
 
-    localparam IDLE     = 2'b00;
-    localparam START    = 2'b01;
-    localparam TRANSMIT = 2'b10;
-    localparam STOP     = 2'b11;
+    localparam IDLE     = 3'd0;
+    localparam START    = 3'd1;
+    localparam TRANSMIT = 3'd2;
+    localparam STOP     = 3'd4;
+    localparam WAIT     = 3'd5;
 
-    localparam READY    = 1'd1;
+    localparam START_BIT = 1'b0;
+    localparam STOP_BIT  = 1'b1;
 
-    localparam START_BIT = 0;
-    localparam STOP_BIT  = 1;
+    localparam WAIT_TIME_IN_BAUDS = 30;
 
-    reg [1:0]next_state = IDLE;
-    reg [1:0]state      = IDLE;
-    reg [1:0]was_state  = IDLE;
-    reg [2:0]d_ctr      = 0;
-    reg [7:0]tsr        = 0;
-    reg [7:0]thr        = 0;
+    reg [7:0] thr        = 0;
+    reg [7:0] tsr        = 0;
+    reg [4:0] wait_time  = 0;
+    reg [3:0] dctr       = 0;
+    reg [2:0] next_state = 0;
+    reg [2:0] was_state  = 0;
+    reg [2:0] state      = 0;
+    reg       was_bclk   = 0;
+    reg       tx_en      = 0;
+    reg       rdy        = 0;
 
-    reg rstate = 0;
-
-
-    always @( posedge clk or posedge rst )
-        if( rst ) begin
-            rstate    = IDLE;
-            tx_rdy    = 1;
-            was_state = IDLE;
+    always @(posedge clk or posedge rst)
+        if (rst) begin
+            next_state <= IDLE;
+            wait_time  <= 0;
+            was_bclk   <= 0;
+            dctr       <= 0;
+            thr        <= 0;
+            tx_rdy     <= 1;
+            tx        <= 1;
         end
-        else
-            case( rstate )
-                IDLE:
-                    if( tx_en ) begin
-                        tx_rdy  = 0;
-                        rstate  = READY;
-                    end
-                    else
-                        tx_rdy = 1;
-                READY:
-                    if( state == IDLE && was_state == STOP ) begin
-                        tx_rdy    = 1;
-                        rstate    = IDLE;
-                        was_state = state;
-                    end
-                    else
-                        was_state = state;
-            endcase
-
-    always @( posedge bclk )
-        if( rst )
-            state <= 0;
-        else
-            state <= next_state;
-
-    always @( negedge bclk or posedge rst ) begin
-         if( rst )begin
-            d_ctr  <= 0;
-            txd    <= 1;
-            tsr    <= 0;
-        end
-        else
-            case( state )
-                IDLE:
-                    if( !tx_rdy ) begin
-                        next_state  <= START;
-                        tsr         <= din;
-                    end
-                START:
+        else begin
+            was_state <= state;
+            if (bclk & !was_bclk) begin
+                was_bclk  <= bclk;
+                case( state )
+                    IDLE:
+                        if (tx_en) begin
+                            next_state <= START;
+                            tsr        <= thr;
+                        end
+                    START:
                     begin
                         next_state <= TRANSMIT;
-                        txd        <= START_BIT;
+                        tx        <= START_BIT;
                     end
-                TRANSMIT:
+                    TRANSMIT:
                     begin
-                        d_ctr <= d_ctr + 1;
-                        txd   <= tsr[0];
-                        tsr   <= { 1'b0, tsr[7:1] };
-                        if( d_ctr == 3'd7 ) begin
+                        tx  <= tsr[0];
+                        tsr  <= tsr >> 1;
+                        dctr <= dctr + 1'b1;
+                        if ( 8 == dctr) begin
                             next_state <= STOP;
-                            d_ctr      <= 0;
+                            dctr       <= 0;
                         end
                     end
-                STOP:
+                    STOP:
                     begin
-                        next_state <= IDLE;
-                        txd        <= STOP_BIT;
+                        next_state <= WAIT;
+                        tx        <= STOP_BIT;
                     end
-            endcase
-     end
+                    WAIT:
+                    begin
+                        wait_time <= wait_time + 1'b1;
+                        if (wait_time == WAIT_TIME_IN_BAUDS) begin
+                            next_state <= IDLE;
+                            wait_time  <= 0;
+                        end
+                    end
+                endcase
+            end
+            else
+                was_bclk <= bclk;
+        end
+
 endmodule

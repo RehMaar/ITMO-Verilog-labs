@@ -18,7 +18,7 @@ module ctl(
     wire dout_io_rdy;
     wire dour_uart_rdy;
 
-    io_ctl #( 100000000 )io_ctl(
+    ioctl #( 100000000 )ioctl(
         .clk(clk),
         .rst(rst),
 
@@ -48,7 +48,7 @@ module ctl(
           if (rst)
             led <= 0;
           /* SW == 0: echo mode; SW = 1: send mode. */
-          else if ( !sw && dout_uart_rdy)
+          else if (!sw && dout_uart_rdy)
             led <= dout_uart;
 
 

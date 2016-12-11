@@ -23,7 +23,8 @@ module rx_ctl(
     );
 
     /* Receiver fifo. */
-/*  fifo rx_fifo(
+    /*
+  fifo rx_fifo(
         .clk(clk),
         .rst(rst),
 
@@ -35,5 +36,5 @@ module rx_ctl(
         .empty(fifo_empty),
         .dout (dout)
     );
- */
+    */
 endmodule

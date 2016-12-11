@@ -12,9 +12,38 @@ module tx_ctl(
 
     reg wr = 0;
     reg rd = 0;
-    reg en = 0;
-
+    reg was_din_rdy = 0;
+    reg was_tx_rdy = 0;
+    reg was_rd = 0;
     wire [7:0] fifo_dout;
+    wire en;
+
+
+    assign en = rd; // && !was_rd;
+
+    always @(negedge clk or posedge rst) begin
+        if (rst) begin
+            wr <= 0;
+            rd <= 0;
+        end
+        else begin
+            wr <= din_rdy && !was_din_rdy && !fifo_full && !rd;
+            rd <= tx_rdy && !was_rd && was_tx_rdy && !fifo_empty && !wr;
+        end
+    end
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            was_din_rdy = 0;
+            was_tx_rdy = 0;
+            was_rd = 0;
+        end
+        else begin
+            was_din_rdy = din_rdy;
+            was_tx_rdy  = tx_rdy;
+            was_rd      = rd;
+        end
+    end
 
 
     fifo tx_fifo(
@@ -47,45 +76,5 @@ module tx_ctl(
         .tx_rdy(tx_rdy)
     );
 
-    /* Read data from  buffer to thr for transmission.
-     */
-    always @( posedge clk )
-        if( rst ) begin
-            rd <= 0;
-        end
-        else if( rd ) begin
-            rd <= 0;
-        end
-        /* If fifo isn't empty, tx ready for transmission and no writing
-         * we can read from fifo.
-         * Need tx_rdy to be in untill next transmision.
-         */
-        else if( !fifo_empty && tx_rdy && !wr ) begin
-            rd <= 1;
-        end
-        else
-            rd <= 0;
 
-
-    /* Write data from input to fifo-buffer.*/
-    always @( negedge clk )
-        if( rst ) begin
-            wr <= 0;
-            en <= 0;
-        end
-        else begin
-        /*
-         * If fifo isn't full, input data is enabled  and no reading
-         * we can write to fifo.
-         */
-            if( din_rdy && !fifo_full && !rd )
-                wr <= 1;
-            else
-                wr <= 0;
-
-            if( rd )
-                en <= 1;
-            else
-                en <= 0;
-        end
 endmodule
