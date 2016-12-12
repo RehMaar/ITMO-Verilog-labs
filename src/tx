@@ -1,0 +1,25 @@
+-> din
+-> din_rdy
+
+<- tx
+<- tx_rdy
+
+FIFO:
+    -> rd
+    -> wr
+
+    -> din
+
+    <- full
+    <- empty
+    <- dout
+
+TX:
+    -> bclk
+    -> din
+    -> din_rdy
+
+    <- tx
+    <- tx_rdy
+
+
