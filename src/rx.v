@@ -59,8 +59,8 @@ module rx(
                     START:
                     begin
                         d_ctr  <= d_ctr + 1'b1;
-                        rsr    <= rsr << 1;
-                        rsr[0] <= rx;
+                        rsr    <=  { rx, rsr[7:1] }; //rsr << 1;
+                        //rsr[0] <= rx;
                         if (3'd7 == d_ctr) begin
                             next_state <= STOP;
                             d_ctr      <= 0;
