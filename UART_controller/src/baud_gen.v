@@ -1,7 +1,7 @@
 /* Generates bauds. */
 /* For 9600 bps 8N1 -- (10417) 9600 bauds. */
 module baud_gen #(
-    parameter BAUDRATE = 9600
+    parameter BAUDRATE = 10417
 )
 (
     input           clk,
@@ -12,8 +12,10 @@ module baud_gen #(
     reg [16:0] ctr  = BAUDRATE;
 
     always @( posedge clk ) begin
-        if( rst )
+        if( rst ) begin
             ctr = BAUDRATE;
+			   bclk = 0;
+		  end
         else begin
             if( ctr == BAUDRATE ) begin
                 bclk = 1;

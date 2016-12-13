@@ -7,8 +7,7 @@ module rx_ctl(
 
     /* Received data. */
     output  [7:0]   dout,
-    output          dout_rdy,
-    output          rx_rdy
+    output          dout_rdy
 );
     rx rx_uut( 
         .clk (clk),
@@ -18,8 +17,7 @@ module rx_ctl(
         .rx(rx),
 
         .dout    (dout),
-        .dout_rdy(dout_rdy),
-        .rx_rdy  (rx_rdy)
+        .dout_rdy(dout_rdy)
     );
 
     /* Receiver fifo. */

@@ -5,8 +5,7 @@ module rx(
     input            rx,
 
     output  reg[7:0] dout,
-    output  reg      dout_rdy,
-    output  reg      rx_rdy
+    output  reg      dout_rdy
 );
 
     localparam START_BIT = 0;
@@ -39,7 +38,6 @@ module rx(
             next_state <= 0;
             was_bclk   <= 0;
             dout_rdy   <= 0;
-            rx_rdy     <= 1;
             d_ctr      <= 0;
             rsr        <= 0;
             dout       <= 0;
@@ -53,14 +51,13 @@ module rx(
                         dout_rdy <= 0;
                         if (START_BIT == rx) begin
                             next_state <= START;
-                            rx_rdy     <= 0;
                         end
                     end
                     START:
                     begin
                         d_ctr  <= d_ctr + 1'b1;
-                        rsr    <= rsr << 1;
-                        rsr[0] <= rx;
+                        rsr    <=  { rx, rsr[7:1] }; //rsr << 1;
+                        //rsr[0] <= rx;
                         if (3'd7 == d_ctr) begin
                             next_state <= STOP;
                             d_ctr      <= 0;
@@ -73,7 +70,6 @@ module rx(
                             dout     <= rsr;
                         end
                         next_state <= IDLE;
-                        rx_rdy     <= 0;
                     end
                 endcase
             end

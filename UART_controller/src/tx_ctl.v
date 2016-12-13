@@ -9,7 +9,7 @@ module tx_ctl(
     output          tx,
     output          tx_rdy
 );
-
+/*
     reg wr = 0;
     reg rd = 0;
     reg was_din_rdy = 0;
@@ -44,33 +44,35 @@ module tx_ctl(
             was_rd      = rd;
         end
     end
-
-
+*/
+/*
     fifo tx_fifo(
         .clk(clk),
         .rst(rst),
 
         .rd (rd),
         .wr (wr),
-        /* On next clk data is in memory. */
+
         .din(din),
 
         .full (fifo_full),
         .empty(fifo_empty),
-        /* On next clk after the rd signal data is in dout. */
+ 
         .dout (fifo_dout)
     );
-
+*/
     tx tx_mod(
         .clk(clk),
         .rst(rst),
 
         .bclk(bclk),
         /* Data to transmit. */
-        .din(fifo_dout),
+        //.din(fifo_dout),
         /* Data ready to transmit. */
-        .din_rdy(en),
+        //.din_rdy(en),
         /* TX-pin */
+        .din(din),
+        .din_rdy(din_rdy),
         .tx(tx),
         /* Transmitter is ready ( 1 ), is busy ( 0 ). */
         .tx_rdy(tx_rdy)

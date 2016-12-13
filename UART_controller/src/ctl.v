@@ -8,7 +8,7 @@ module ctl(
     output          tx,
 
     /* Nexys interface.*/
-    input              sw,
+    input           sw,
     output  reg[7:0]   led
 );
 
@@ -17,19 +17,22 @@ module ctl(
 
     wire dout_io_rdy;
     wire dour_uart_rdy;
+    wire tx_rdy;
 
-    ioctl #( 100000000 )ioctl(
+    ioctl ioctl(
         .clk(clk),
         .rst(rst),
 
         .sw(sw),
 
-        .din    (dout_uart), /* dout from uart_ctl to io_ctl din */
+        .din    (dout_uart),
         .din_rdy(dout_uart_rdy),
 
+        .tx_rdy(tx_rdy),
+
         .dout    (dout_io),
-        .dout_rdy(dout_io_rdy) /* dout_io is ready. */
-    );
+        .dout_rdy(dout_io_rdy)
+     );
 
     uart_ctl uart_ctl(
         .clk(clk),
@@ -41,14 +44,15 @@ module ctl(
 
         .tx      (tx),
         .dout    (dout_uart),
-        .dout_rdy(dout_uart_rdy)
+        .dout_rdy(dout_uart_rdy),
+        .tx_rdy  (tx_rdy)
     );
 
-     always @(negedge clk)
-          if (rst)
+    always @(negedge clk)
+        if (rst)
             led <= 0;
           /* SW == 0: echo mode; SW = 1: send mode. */
-          else if (!sw && dout_uart_rdy)
+        else if (!sw && dout_uart_rdy)
             led <= dout_uart;
 
 

@@ -8,14 +8,13 @@ module tx(
 
     output  reg   tx,
     output  reg   tx_rdy
-
 );
 
     localparam IDLE     = 3'd0;
     localparam START    = 3'd1;
     localparam TRANSMIT = 3'd2;
-    localparam STOP     = 3'd4;
-    localparam WAIT     = 3'd5;
+    localparam STOP     = 3'd3;
+    localparam WAIT     = 3'd4;
 
     localparam START_BIT = 1'b0;
     localparam STOP_BIT  = 1'b1;
@@ -25,40 +24,45 @@ module tx(
     reg [7:0] thr        = 0;
     reg [7:0] tsr        = 0;
     reg [4:0] wait_time  = 0;
-    reg [3:0] dctr       = 0;
+    reg [2:0] dctr       = 0;
     reg [2:0] next_state = 0;
     reg [2:0] was_state  = 0;
     reg [2:0] state      = 0;
     reg       was_bclk   = 0;
     reg       tx_en      = 0;
-    reg       rdy        = 0;
+    reg       was_din_rdy        = 0;
 
     always @(negedge clk or posedge rst)
-        if (rst)
+        if (rst) begin
             state = IDLE;
+          end
         else
-            if (!bclk && was_bclk)
-                state = next_state;
+            if (!bclk && was_bclk) begin
+                state = next_state; 
+                end
 
    always @(negedge clk or posedge rst)
        if (rst) begin
             tx_en = 0;
             thr   = 0;
+                tx_rdy = 1;
+                was_din_rdy = din_rdy;
        end
        else begin
-           if (din_rdy & !rdy) begin
+           if (din_rdy & !was_din_rdy) begin
                 tx_rdy = 0;
                 thr    = din;
                 tx_en  = 1;
-                rdy    = 1;
+                was_din_rdy = din_rdy;
            end
-           else
-               if (was_state == IDLE && state == START) begin
+           else begin
+               if (was_state == IDLE && next_state == START) begin
                     tx_en = 0;
                end
-               if (was_state == WAIT && state == IDLE) begin
+               else if (was_state == WAIT && state == IDLE) begin
                     tx_rdy = 1;
-                    rdy    = 0;
+               end
+                    was_din_rdy = din_rdy;
                end
        end
 
@@ -69,9 +73,8 @@ module tx(
             wait_time  <= 0;
             was_bclk   <= 0;
             dctr       <= 0;
-            thr        <= 0;
-            tx_rdy     <= 1;
-            tx        <= 1;
+            tsr        <= 0;
+            tx         <= 1;
         end
         else begin
             was_state <= state;
@@ -86,14 +89,14 @@ module tx(
                     START:
                     begin
                         next_state <= TRANSMIT;
-                        tx        <= START_BIT;
+                        tx         <= START_BIT;
                     end
                     TRANSMIT:
                     begin
-                        tx  <= tsr[0];
+                        tx   <= tsr[0];
                         tsr  <= tsr >> 1;
                         dctr <= dctr + 1'b1;
-                        if ( 8 == dctr) begin
+                        if (7 == dctr) begin
                             next_state <= STOP;
                             dctr       <= 0;
                         end
@@ -103,8 +106,6 @@ module tx(
                         next_state <= WAIT;
                         tx        <= STOP_BIT;
                     end
-                    /* Need to wait between words sending.
-                     * */
                     WAIT:
                     begin
                         wait_time <= wait_time + 1'b1;
