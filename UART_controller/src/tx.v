@@ -59,10 +59,13 @@ module tx(
                if (was_state == IDLE && next_state == START) begin
                     tx_en = 0;
                end
+					if (state == IDLE)
+						tx_rdy = 1;
+					/*
                else if (was_state == WAIT && state == IDLE) begin
                     tx_rdy = 1;
-               end
-                    was_din_rdy = din_rdy;
+               end */
+                was_din_rdy = din_rdy;
                end
        end
 
@@ -78,6 +81,12 @@ module tx(
         end
         else begin
             was_state <= state;
+				if (IDLE == state && tx_en) begin
+						next_state <= START;
+						tsr		  <= thr;
+				end
+				else
+				/*
             if (bclk & !was_bclk) begin
                 was_bclk  <= bclk;
                 case( state )
@@ -85,7 +94,10 @@ module tx(
                         if (tx_en) begin
                             next_state <= START;
                             tsr        <= thr;
-                        end
+                        end */
+ 			    if (bclk & !was_bclk) begin
+                was_bclk  <= bclk;
+                case( state )
                     START:
                     begin
                         next_state <= TRANSMIT;

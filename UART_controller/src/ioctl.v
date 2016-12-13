@@ -18,7 +18,7 @@ module ioctl (
     localparam IDLE = 1'b0;
     localparam SEND = 1'b1;
 
-    localparam WORDS_COUNT = 3;
+    localparam WORDS_COUNT = 15;
     localparam TIME = 100000; //00;
 
     reg [31:0]tm = 0;
@@ -72,8 +72,7 @@ module ioctl (
                         end
                         SEND:
                         begin
-                            if (tx_rdy && !was_rdy) begin
-                                was_rdy  <= 1;
+                            if (tx_rdy) begin
                                 dout     <= data[d_ctr];
                                 d_ctr    <= d_ctr + 1'b1;
                                 dout_rdy <= 1;
@@ -83,10 +82,8 @@ module ioctl (
                                     dout <= 0;
                                 end
                             end
-                            else begin
-                                was_rdy <= tx_rdy;
-                                dout_rdy <= 0;
-                            end
+									 else
+										dout_rdy <= 0;
                         end
                     endcase
                 end
