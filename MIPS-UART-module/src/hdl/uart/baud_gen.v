@@ -1,7 +1,7 @@
 /* Generates bauds. */
 /* For 9600 bps 8N1 -- (10417) 9600 bauds. */
 module baud_gen #(
-    parameter BAUDRATE = 10417
+    parameter BAUDRATE = 100 // 10417
 )
 (
     input           clk,
