@@ -9,26 +9,26 @@ module baud_gen #(
 
     output   reg     bclk
 );
-    reg [16:0] ctr  = BAUDRATE;
+    reg [16:0] ctr = BAUDRATE;
 
     always @( posedge clk ) begin
         if( rst ) begin
-            ctr = BAUDRATE;
-               bclk = 0;
-          end
+            ctr  <= BAUDRATE;
+            bclk <= 0;
+         end
         else begin
             if( ctr == BAUDRATE ) begin
-                bclk = 1;
-                ctr  = ctr - 16'd1;
+                bclk <= 1;
+                ctr  <= ctr - 16'd1;
             end
             else if( ctr == BAUDRATE/2 ) begin
-                bclk = 0;
-                ctr  = ctr - 16'd1;
+                bclk <= 0;
+                ctr  <= ctr - 16'd1;
             end
             else if( ctr == 0 )
-                ctr = BAUDRATE;
+                ctr <= BAUDRATE;
             else
-                ctr = ctr - 16'd1;
+                ctr <= ctr - 16'd1;
         end
     end
 

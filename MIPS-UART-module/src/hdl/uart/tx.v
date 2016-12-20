@@ -28,7 +28,7 @@ module tx(
     reg [2:0] state      = 0;
     reg       was_bclk   = 0;
     reg       tx_en      = 0;
-    reg       was_din_rdy = 0;
+    reg      was_din_rdy = 0;
 
     always @(posedge clk or posedge rst)
         if (rst) begin
