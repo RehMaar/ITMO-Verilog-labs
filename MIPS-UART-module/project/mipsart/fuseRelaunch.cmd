@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/testbench_isim_beh.exe" -prj "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/testbench_beh.prj" "work.testbench" "work.glbl" 

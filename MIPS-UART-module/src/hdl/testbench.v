@@ -63,7 +63,7 @@ module testbench;
 
      initial begin
           mips_clk = 0;
-          sw = 0;
+          sw = 1;
 
           forever
                #10 mips_clk = !mips_clk;

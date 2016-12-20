@@ -64,9 +64,9 @@ always@(posedge clk_i, posedge rst_i)
                         if(adr_i == BASE_ADDR) begin
                             din <= dat_i[7:0];
                             din_rdy <= 1;
-                        end else
-									din_rdy <= 0;
-								
+                        end
+                        else
+                            din_rdy <= 0;
                         ack_o   <= 1'b1;
                         state_r <= ACK;
                     end else begin

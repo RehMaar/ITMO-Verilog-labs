@@ -30,17 +30,19 @@ Disassembly of section .text:
   40:	00000000 	nop
 
 00000044 <to_send>:
-  44:	8c080202 	lw	t0,514(zero)
-  48:	8c0a0211 	lw	t2,529(zero)
+  44:	31080000 	andi	t0,t0,0x0
+  48:	314a0000 	andi	t2,t2,0x0
+  4c:	21080202 	addi	t0,t0,514
+  50:	214a0210 	addi	t2,t2,528
 
-0000004c <send_to_uart_loop>:
-  4c:	8d090000 	lw	t1,0(t0)
-  50:	00000000 	nop
-  54:	ac090400 	sw	t1,1024(zero)
-  58:	21080001 	addi	t0,t0,1
-  5c:	110affe8 	beq	t0,t2,0 <entry>
-  60:	00000000 	nop
-  64:	08000013 	j	4c <send_to_uart_loop>
+00000054 <send_to_uart_loop>:
+  54:	8d090000 	lw	t1,0(t0)
+  58:	00000000 	nop
+  5c:	ac090800 	sw	t1,2048(zero)
+  60:	21080001 	addi	t0,t0,1
+  64:	110affe6 	beq	t0,t2,0 <entry>
   68:	00000000 	nop
-  6c:	08000000 	j	0 <entry>
+  6c:	08000015 	j	54 <send_to_uart_loop>
   70:	00000000 	nop
+  74:	08000000 	j	0 <entry>
+  78:	00000000 	nop

@@ -1,0 +1,80 @@
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o /home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/testbench_isim_beh.exe -prj /home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/testbench_beh.prj work.testbench work.glbl 
+ISim P.20131013 (signature 0xfbc00daa)
+Number of CPUs detected in this system: 4
+Turning on mult-threading, number of parallel sub-compilation jobs: 8 
+Determining compilation order of HDL files
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/uart/tx.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/uart/rx.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/uart/fifo.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/uart/tx_ctl.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/uart/rx_ctl.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/uart/baud_gen.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/regfile.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/control.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/alu_ctrl.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/alu.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/wb_stage.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/uart/uart_ctl.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/ram_wb/wb_ram_sc_sw.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/mem_stage.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/master_wb.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/if_stage.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/id_stage.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/hazard_unit.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/forwarding_unit.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/ex_stage.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/ram_wb/ram_wb.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/pipeline.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/ioctrl_wb.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/gpio_wb.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/dp_memory.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/mips_system.v" into library work
+Analyzing Verilog file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/testbench.v" into library work
+Analyzing Verilog file "/opt/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v" into library work
+Parsing VHDL file "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/wb/wb.vhd" into library work
+Starting static elaboration
+WARNING:HDLCompiler:604 - "/home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/../../src/hdl/testbench.v" Line 17: Module instantiation should have an instance name
+Completed static elaboration
+Fuse Memory Usage: 95784 KB
+Fuse CPU Usage: 1350 ms
+Compiling module baud_gen
+Compiling module gpio_wb(BASE_ADDR=32'b0100000000...
+Compiling module rx
+Compiling module rx_ctl
+Compiling module fifo
+Compiling module tx
+Compiling module tx_ctl
+Compiling module uart_ctl
+Compiling module ioctrl_wb(BASE_ADDR=32'b01000000...
+Compiling module ram(addr_high=32'b01111111111,ad...
+Compiling module data_ram_wb(addr_high=32'b011111...
+Compiling module if_stage
+Compiling module hazard_unit
+Compiling module base_forwarding_unit
+Compiling module forwarding_unit
+Compiling module regfile
+Compiling module control
+Compiling module id_stage
+Compiling module alu_ctrl
+Compiling module alu
+Compiling module ex_stage
+Compiling module mem_stage
+Compiling module wb_stage
+Compiling module pipeline
+Compiling module master_wb
+Compiling module bus_control(addr_high=32'b011111...
+Compiling module mips_system
+Compiling module testbench
+Compiling module glbl
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package intercon_package
+Compiling architecture rtl of entity intercon [intercon_default]
+Time Resolution for simulation is 1ps.
+Waiting for 20 sub-compilation(s) to finish...
+Compiled 5 VHDL Units
+Compiled 29 Verilog Units
+Built simulation executable /home/maar/Code/Git/Verilog/MIPS-UART-module/project/mipsart/testbench_isim_beh.exe
+Fuse Memory Usage: 665992 KB
+Fuse CPU Usage: 1580 ms
+GCC CPU Usage: 4540 ms
