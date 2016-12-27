@@ -1,31 +1,24 @@
 /* Generates bauds. */
 /* For 9600 bps 8N1 -- (10417) 9600 bauds. */
 module baud_gen #(
-    parameter BAUDRATE = 10417
+    parameter BAUDRATE = 1042 // 10417
 )
 (
     input           clk,
     input           rst,
 
-    output   reg     bclk
+    output           bclk
 );
     reg [16:0] ctr = BAUDRATE;
+
+    assign bclk = (ctr == BAUDRATE ) ? 1 : 0;
 
     always @( posedge clk ) begin
         if( rst ) begin
             ctr  <= BAUDRATE;
-            bclk <= 0;
          end
         else begin
-            if( ctr == BAUDRATE ) begin
-                bclk <= 1;
-                ctr  <= ctr - 16'd1;
-            end
-            else if( ctr == BAUDRATE/2 ) begin
-                bclk <= 0;
-                ctr  <= ctr - 16'd1;
-            end
-            else if( ctr == 0 )
+            if( ctr == 0 )
                 ctr <= BAUDRATE;
             else
                 ctr <= ctr - 16'd1;

@@ -18,7 +18,6 @@ all:
 	$(COPY_MIPS) -O verilog -R .text $(SRC).axf data.vh
 	$(COPY_MIPS) -O verilog -R .data $(SRC).axf text.vh
 	$(CONVERT)
-	cp *.rom ../xilinx/uartmips
 
 clean:
 	rm -f *.o

@@ -22,6 +22,8 @@ module ioctrl_wb #(parameter BASE_ADDR = 32'h00000800) (
 localparam IDLE = 0;
 localparam ACK  = 1;
 
+localparam DATA_ADDR = BASE_ADDR+1;
+
 wire read  = cyc_i & stb_i & !we_i;
 wire write = cyc_i & stb_i & we_i;
 
@@ -34,6 +36,8 @@ wire dout_rdy;
 
 reg [7:0]din;
 reg din_rdy;
+reg was_dout_rdy;
+reg [7:0]status_reg = 0;
 
 uart_ctl uart_uut(
     .clk(clk_i),
@@ -48,6 +52,20 @@ uart_ctl uart_uut(
     .dout_rdy(dout_rdy)
 );
 
+always @(negedge clk_i, posedge rst_i)
+    if(rst_i) begin
+        status_reg <= 0;
+    end else begin
+        if (dout_rdy & !was_dout_rdy) begin
+            status_reg[0] <= dout_rdy;
+            was_dout_rdy <= dout_rdy;
+        end else begin
+            was_dout_rdy <= dout_rdy;
+        end
+        if (adr_i == DATA_ADDR)
+            status_reg <= 0;
+    end
+
 always@(posedge clk_i, posedge rst_i)
     if(rst_i) begin
         state_r <= 0;
@@ -61,7 +79,7 @@ always@(posedge clk_i, posedge rst_i)
             IDLE:
                 begin
                     if(write) begin
-                        if(adr_i == BASE_ADDR) begin
+                        if(adr_i == DATA_ADDR) begin
                             din <= dat_i[7:0];
                             din_rdy <= 1;
                         end
@@ -71,8 +89,9 @@ always@(posedge clk_i, posedge rst_i)
                         state_r <= ACK;
                     end else begin
                         din_rdy <= 0;
-                        if(read && dout_rdy) begin
-                            dat_o <= (adr_i == BASE_ADDR)? dout: 0;
+                        if(read) begin
+                            dat_o <= (adr_i == BASE_ADDR)? status_reg :
+                                     (adr_i == DATA_ADDR)? dout: 0;
                             state_r <= ACK;
                         end
                     end
