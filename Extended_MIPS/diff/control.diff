@@ -1,0 +1,13 @@
+30d29
+<                     SPEC  = 6'b011100;
+38d36
+<      reg register_op;
+59d56
+<           register_op  = ( opcode == SPEC );
+99,104d95
+<           else if (register_op) begin
+<                ex_alu_op      = 2'b11; // operation defined by func code
+<                ex_dst_reg_sel = 1'b1;  // rd dest
+<                wb_mem_to_reg  = 1'b0;   // alu_out
+<                wb_reg_write   = 1'b1;  // write to rd
+<           end

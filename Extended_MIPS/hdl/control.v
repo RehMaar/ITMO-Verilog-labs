@@ -40,7 +40,7 @@ module control(
     reg branch_op;
     reg jump_op;
 
-    /* Reguster operation */
+    /* Register operation */
     reg register_op;
 
     assign ex_imm_command = immediate_op;

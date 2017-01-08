@@ -9,8 +9,6 @@ module alu ( input      [4:0]  alu_ctl,
              output            zero_flag );
 
      assign zero_flag = (result == 0);
-     integer i = 0;
-     reg stop = 1;
 
      function integer clx;
         input [31:0]b;
@@ -23,12 +21,91 @@ module alu ( input      [4:0]  alu_ctl,
                         disable CLXLOOP;
                     end
             end
-            clx = i[7:0];
+            clx = i;
         end
      endfunction
 
+/*
+     function integer clx;
+        input [31:0]b;
+        input var;
+        integer i;
+        reg a;
+        begin
+            a = 1;
+            clx = 0;
+            for (i = 0; i < 32; i = i + 1) begin
+                if (a && var == b[31-i]) begin
+                    clx = clx + 1;
+                end else begin
+                    a = 0;
+                end
+            end
+        end
+     endfunction
+*/
+/*
+     function integer clx;
+        input [31:0]b;
+        integer i;
+        reg a;
+        begin
+            a = 1;
+            clx = 0;
+            casez (b[31:24])
+                8'b00000000:   begin 
+                    clx = clx + 8;
+                    casez (b[23:16])
+                        8'b00000000:   begin 
+                            clx = clx + 8;
+                            casez (b[15:8])
+                                8'b00000000:   begin 
+                                    clx = clx + 8;
+                                    casez (b[7:0])
+                                        8'b00000000: clx = clx + 8;
+                                        8'b00000001:   clx = clx + 7;
+                                        8'b0000001?:   clx = clx + 6;
+                                        8'b000001??:   clx = clx + 5;
+                                        8'b00001???:   clx = clx + 4;
+                                        8'b0001????:   clx = clx + 3;
+                                        8'b001?????:   clx = clx + 2;
+                                        8'b01??????:   clx = clx + 1;
+                                        8'b1???????:   clx = clx + 0;
+                                    endcase
+                                end
+                                8'b00000001:   clx = clx + 7;
+                                8'b0000001?:   clx = clx + 6;
+                                8'b000001??:   clx = clx + 5;
+                                8'b00001???:   clx = clx + 4;
+                                8'b0001????:   clx = clx + 3;
+                                8'b001?????:   clx = clx + 2;
+                                8'b01??????:   clx = clx + 1;
+                                8'b1???????:   clx = clx + 0;
+                            endcase
+                        end
+                        8'b00000001:   clx = clx + 7;
+                        8'b0000001?:   clx = clx + 6;
+                        8'b000001??:   clx = clx + 5;
+                        8'b00001???:   clx = clx + 4;
+                        8'b0001????:   clx = clx + 3;
+                        8'b001?????:   clx = clx + 2;
+                        8'b01??????:   clx = clx + 1;
+                        8'b1???????:   clx = clx + 0;
+                    endcase
+                end
+                8'b00000001:   clx = clx + 7;
+                8'b0000001?:   clx = clx + 6;
+                8'b000001??:   clx = clx + 5;
+                8'b00001???:   clx = clx + 4;
+                8'b0001????:   clx = clx + 3;
+                8'b001?????:   clx = clx + 2;
+                8'b01??????:   clx = clx + 1;
+                8'b1???????:   clx = clx + 0;
+            endcase
+        end
+     endfunction
+*/
      always @(alu_ctl, a_in, b_in) begin         // reevaluate if these change
-          stop = 1;
           case (alu_ctl)
                0:  result = a_in & b_in;         // bitwise and
                1:  result = a_in | b_in;         // bitwise or
@@ -37,11 +114,10 @@ module alu ( input      [4:0]  alu_ctl,
                7:  result = a_in < b_in ? 1 : 0; // set on less than
                8:  result = ~(a_in | b_in);      // bitwise nor
                9:  result = a_in ^ b_in;         // bitwise xor
-               // CHANGED
                10:                         // count leading zeros
-                   result = clx(b_in, 1);
+                   result = clx(b_in);
                11:                          // count leading ones
-                   result = clx(b_in, 0);
+                   result = clx(~b_in);
                default: result = 0;
           endcase
      end

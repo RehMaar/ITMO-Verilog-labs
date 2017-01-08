@@ -1,35 +1,27 @@
 .global entry
 
-.data                  /* data section*/
+.data
         .word 0x00010001
         .word 0x11011111
         .word 0x00000000
         .word 0xFFFFFFFF
-.text                  /* code goes to text section*/
+.text
 .ent entry
 entry:
     lw $t0, 0x200
-    and $t1, $t0
-/* 71284820 */
-/*    clo $t1, $t0 */
+    clo $t1, $t0
     sw $t1, 0x400
     lw $t0, 0x201
-    and $t2, $t0
-/* 71485021  */
-/*    clz $t2, $t0 */
+    clz $t2, $t0
     sw $t2, 0x400
     lw $t0, 0x202
-    and $t1, $t0
+    clo $t1, $t0 */
     sw $t1, 0x400
-    and $t2, $t0
-/*    clo $t1, $t0 */
-/*    clz $t2, $t0 */
+    clz $t2, $t0
     sw $t2, 0x400
     lw $t0, 0x203
-    and $t1, $t0
+    clo $t1, $t0 
     sw $t1, 0x400
-    and $t2, $t0
-/*    clo $t1, $t0 */
-/*    clz $t2, $t1*/
+    clz $t2, $t1
     sw $t2, 0x400
 .end entry

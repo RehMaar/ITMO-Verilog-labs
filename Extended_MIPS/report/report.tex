@@ -7,6 +7,7 @@
 \captionsetup{labelsep=period}
 \pagestyle{fancy}
 \usepackage{listings,longtable,amsmath,amsfonts,graphicx,tikz,tabularx}
+\usepackage{float}
 
 \lstset{
     basicstyle=\footnotesize,
@@ -83,26 +84,25 @@
 
     \section*{Цели работы}
         \begin{enumerate}
-            \item
-            \item
-            \item
+            \item  Знакомство с микроархитектурой конвейерного процессора MIPS32 
+            \item   Изучение принципов расширения системы команд конвейерного процессора 
         \end{enumerate}
 
     \section*{Описание структуры команд}
         \subsection*{CLZ}
             Format:
-            \begin[description]
-                \item[$[31:26]$] -- spectial ( 011100 )
-                \item[$[25:21]$] -- rs ( source register )
-                \item[$[20:16]$] -- rt ( the same as rd )
-                \item[$[15:11]$] -- rd ( destination register )
-                \item[$[10:6]$]  -- 00000
-                \item[$[5:0]$]   -- 100001 ( CLZ opcode )
-            \end[description]
+            \begin{itemize}
+                \item $[31:26]$  -- spectial ( 011100 )
+                \item $[25:21]$  -- rs ( source register )
+                \item $[20:16]$  -- rt ( the same as rd )
+                \item $[15:11]$  -- rd ( destination register )
+                \item $[10:6]$   -- 00000
+                \item $[5:0]$    -- 100001 ( CLZ opcode )
+            \end{itemize}
         Команда производит счёт количество лидирующих нулей в регистре rs и
         записывает результат в rd.
         Алгоритм:
-        \begin{vebratim}
+        \begin{verbatim}
             temp = 32
             for i in 32 .. 0 {
                 if rs[i] == 1 {
@@ -111,22 +111,22 @@
                 }
             }
             rd = temp
-        \end{vebratim}
+        \end{verbatim}
         \subsection*{CLO}
             Format:
-            \begin[description]
-                \item[$[31:26]$] -- spectial ( 011100 )
-                \item[$[25:21]$] -- rs ( source register )
-                \item[$[20:16]$] -- rt ( the same as rd )
-                \item[$[15:11]$] -- rd ( destination register )
-                \item[$[10:6]$]  -- 00000
-                \item[$[5:0]$]   -- 100000 ( CLO opcode )
-            \end[description]
+            \begin{itemize}
+                \item $[31:26]$ -- spectial ( 011100 )
+                \item $[25:21]$ -- rs ( source register )
+                \item $[20:16]$ -- rt ( the same as rd )
+                \item $[15:11]$ -- rd ( destination register )
+                \item $[10:6]$  -- 00000
+                \item $[5:0]$   -- 100000 ( CLO opcode )
+            \end{itemize}
         Команда производит счёт количество лидирующих единиц в регистре rs и
         записывает результат в rd.
 
         Алгоритм:
-        \begin{vebratim}
+        \begin{verbatim}
             temp = 32
             for i in 32 .. 0 {
                 if rs[i] == 0 {
@@ -135,24 +135,56 @@
                 }
             }
             rd = temp
-        \end{vebratim}
+        \end{verbatim}
 
      \section*{Блок-схема}
-        \begin{landscape}
-            \begin{figure}[ht]
-                \includegraphics{../images/code_scheme.png}
-            \end{figure}
-        \end{landscape}
+             \begin{figure}[H]
+                 \includegraphics[scale=0.7]{../images/code_schema.png}
+             \end{figure}
      \section*{Временные диаграммы}
-        \begin{figure}[h!]
-            \includegraphics[scale=0.5]{../images/clo.png}
+        Сигналы:
+        \begin{enumerate}
+            \item result -- результат операции;
+            \item b\_in  -- входной операнд, над которым производится операция;
+            \item alu\_ctl -- код операции ( clo -- 11; clz -- 10).
+        \end{enumerate}
+        \begin{figure}[H]
+            \includegraphics[scale=0.5]{../images/clo_1.png}
+            \caption{Input: 0x00010001}
         \end{figure}
-        \begin{figure}[h!]
-            \includegraphics[scale=0.5]{../images/clz.png}
+        \begin{figure}[H]
+            \includegraphics[scale=0.5]{../images/clz_1.png}
+            \caption{Input: 0x11011111}
+        \end{figure}
+
+        \begin{figure}[H]
+            \includegraphics[scale=0.5]{../images/clo_2.png}
+            \caption{Input: 0x00000000}
+        \end{figure}
+        \begin{figure}[H]
+            \includegraphics[scale=0.5]{../images/clz_2.png}
+            \caption{Input: 0x00000000}
+        \end{figure}
+
+        \begin{figure}[H]
+            \includegraphics[scale=0.5]{../images/clo_3.png}
+            \caption{Input: 0x11111111}
+        \end{figure}
+        \begin{figure}[H]
+            \includegraphics[scale=0.5]{../images/clz_3.png}
+            \caption{Input: 0x11111111}
         \end{figure}
 
      \section*{Листинг}
-        \lstinputlisting{../src/sw/test.asm}
-
+        \lstinputlisting{../sw/test.asm}
+        В файле alu.v.
+        \lstinputlisting{../diff/alu.diff}
+        В файле control.v.
+        \lstinputlisting{../diff/control.diff}
     \section*{Вывод}
+    В ходе выполнения лабораторной работы были добавлены команды clo (count
+    leading ones) и clz (count leading zeros). Обнаружилось, что предлагаемый
+    к работе компилятор работает с подмножеством ассемблера MIPS, который не
+    содержит в себе данные команды, так что при написании и комплияции кода
+    приходилось переводить команды в машинный код вручную. 
 \end{document}
