@@ -1,0 +1,61 @@
+
+test.o:     file format elf32-tradbigmips
+
+
+Disassembly of section .text:
+
+00000000 <entry>:
+   0:	8c080200 	lw	t0,512(zero)
+   4:	00000000 	nop
+   8:	01284824 	and	t1,t1,t0
+   c:	ac090400 	sw	t1,1024(zero)
+  10:	8c080201 	lw	t0,513(zero)
+  14:	00000000 	nop
+  18:	01485024 	and	t2,t2,t0
+  1c:	ac0a0400 	sw	t2,1024(zero)
+  20:	8c080202 	lw	t0,514(zero)
+  24:	00000000 	nop
+  28:	01284824 	and	t1,t1,t0
+  2c:	ac090400 	sw	t1,1024(zero)
+  30:	01485024 	and	t2,t2,t0
+  34:	ac0a0400 	sw	t2,1024(zero)
+  38:	8c080203 	lw	t0,515(zero)
+  3c:	00000000 	nop
+  40:	01284824 	and	t1,t1,t0
+  44:	ac090400 	sw	t1,1024(zero)
+  48:	01485024 	and	t2,t2,t0
+  4c:	ac0a0400 	sw	t2,1024(zero)
+
+Disassembly of section .data:
+
+00000000 <.data>:
+   0:	00010001 	0x10001
+   4:	11011111 	beq	t0,at,444c <entry+0x444c>
+   8:	00000000 	nop
+   c:	11111111 	beq	t0,s1,4454 <entry+0x4454>
+
+Disassembly of section .reginfo:
+
+00000000 <.reginfo>:
+   0:	00000700 	sll	zero,zero,0x1c
+	...
+
+Disassembly of section .MIPS.abiflags:
+
+00000000 <.MIPS.abiflags>:
+   0:	00000100 	sll	zero,zero,0x4
+   4:	01010001 	0x1010001
+	...
+
+Disassembly of section .pdr:
+
+00000000 <.pdr>:
+	...
+
+Disassembly of section .gnu.attributes:
+
+00000000 <.gnu.attributes>:
+   0:	41000000 	bc0f	4 <.gnu.attributes+0x4>
+   4:	0f676e75 	jal	d9db9d4 <entry+0xd9db9d4>
+   8:	00010000 	sll	zero,at,0x0
+   c:	00070401 	0x70401
