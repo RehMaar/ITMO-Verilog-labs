@@ -10,7 +10,7 @@ module alu ( input      [4:0]  alu_ctl,
 
      assign zero_flag = (result == 0);
 
-     function integer clx;
+     function integer clb;
         input [31:0]b;
         input var;
         integer i;
@@ -21,22 +21,22 @@ module alu ( input      [4:0]  alu_ctl,
                         disable CLXLOOP;
                     end
             end
-            clx = i;
+            clb = i;
         end
      endfunction
 
 /*
-     function integer clx;
+     function integer clb;
         input [31:0]b;
         input var;
         integer i;
         reg a;
         begin
             a = 1;
-            clx = 0;
+            clb = 0;
             for (i = 0; i < 32; i = i + 1) begin
                 if (a && var == b[31-i]) begin
-                    clx = clx + 1;
+                    clb = clb + 1;
                 end else begin
                     a = 0;
                 end
@@ -45,62 +45,62 @@ module alu ( input      [4:0]  alu_ctl,
      endfunction
 */
 /*
-     function integer clx;
+     function integer clb;
         input [31:0]b;
         integer i;
         reg a;
         begin
             a = 1;
-            clx = 0;
+            clb = 0;
             casez (b[31:24])
                 8'b00000000:   begin 
-                    clx = clx + 8;
+                    clb = clb + 8;
                     casez (b[23:16])
                         8'b00000000:   begin 
-                            clx = clx + 8;
+                            clb = clb + 8;
                             casez (b[15:8])
                                 8'b00000000:   begin 
-                                    clx = clx + 8;
+                                    clb = clb + 8;
                                     casez (b[7:0])
-                                        8'b00000000: clx = clx + 8;
-                                        8'b00000001:   clx = clx + 7;
-                                        8'b0000001?:   clx = clx + 6;
-                                        8'b000001??:   clx = clx + 5;
-                                        8'b00001???:   clx = clx + 4;
-                                        8'b0001????:   clx = clx + 3;
-                                        8'b001?????:   clx = clx + 2;
-                                        8'b01??????:   clx = clx + 1;
-                                        8'b1???????:   clx = clx + 0;
+                                        8'b00000000: clb = clb + 8;
+                                        8'b00000001:   clb = clb + 7;
+                                        8'b0000001?:   clb = clb + 6;
+                                        8'b000001??:   clb = clb + 5;
+                                        8'b00001???:   clb = clb + 4;
+                                        8'b0001????:   clb = clb + 3;
+                                        8'b001?????:   clb = clb + 2;
+                                        8'b01??????:   clb = clb + 1;
+                                        8'b1???????:   clb = clb + 0;
                                     endcase
                                 end
-                                8'b00000001:   clx = clx + 7;
-                                8'b0000001?:   clx = clx + 6;
-                                8'b000001??:   clx = clx + 5;
-                                8'b00001???:   clx = clx + 4;
-                                8'b0001????:   clx = clx + 3;
-                                8'b001?????:   clx = clx + 2;
-                                8'b01??????:   clx = clx + 1;
-                                8'b1???????:   clx = clx + 0;
+                                8'b00000001:   clb = clb + 7;
+                                8'b0000001?:   clb = clb + 6;
+                                8'b000001??:   clb = clb + 5;
+                                8'b00001???:   clb = clb + 4;
+                                8'b0001????:   clb = clb + 3;
+                                8'b001?????:   clb = clb + 2;
+                                8'b01??????:   clb = clb + 1;
+                                8'b1???????:   clb = clb + 0;
                             endcase
                         end
-                        8'b00000001:   clx = clx + 7;
-                        8'b0000001?:   clx = clx + 6;
-                        8'b000001??:   clx = clx + 5;
-                        8'b00001???:   clx = clx + 4;
-                        8'b0001????:   clx = clx + 3;
-                        8'b001?????:   clx = clx + 2;
-                        8'b01??????:   clx = clx + 1;
-                        8'b1???????:   clx = clx + 0;
+                        8'b00000001:   clb = clb + 7;
+                        8'b0000001?:   clb = clb + 6;
+                        8'b000001??:   clb = clb + 5;
+                        8'b00001???:   clb = clb + 4;
+                        8'b0001????:   clb = clb + 3;
+                        8'b001?????:   clb = clb + 2;
+                        8'b01??????:   clb = clb + 1;
+                        8'b1???????:   clb = clb + 0;
                     endcase
                 end
-                8'b00000001:   clx = clx + 7;
-                8'b0000001?:   clx = clx + 6;
-                8'b000001??:   clx = clx + 5;
-                8'b00001???:   clx = clx + 4;
-                8'b0001????:   clx = clx + 3;
-                8'b001?????:   clx = clx + 2;
-                8'b01??????:   clx = clx + 1;
-                8'b1???????:   clx = clx + 0;
+                8'b00000001:   clb = clb + 7;
+                8'b0000001?:   clb = clb + 6;
+                8'b000001??:   clb = clb + 5;
+                8'b00001???:   clb = clb + 4;
+                8'b0001????:   clb = clb + 3;
+                8'b001?????:   clb = clb + 2;
+                8'b01??????:   clb = clb + 1;
+                8'b1???????:   clb = clb + 0;
             endcase
         end
      endfunction
@@ -115,9 +115,9 @@ module alu ( input      [4:0]  alu_ctl,
                8:  result = ~(a_in | b_in);      // bitwise nor
                9:  result = a_in ^ b_in;         // bitwise xor
                10:                         // count leading zeros
-                   result = clx(b_in);
+                   result = clb(b_in,1);
                11:                          // count leading ones
-                   result = clx(~b_in);
+                   result = clb(b_in,0);
                default: result = 0;
           endcase
      end
